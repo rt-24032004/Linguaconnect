@@ -1,0 +1,2861 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+
+<title>LinguaConnect</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  --bg:#F5F7FA; --surface:#FFFFFF; --surface-2:#F8FAFC; --surface-3:#EEF2F7;
+  --ink:#1E293B; --ink-soft:#64748B; --ink-faint:#94A3B8;
+  --accent:#4F46E5; --accent-strong:#4338CA; --accent-wash:#EEF0FE; --on-accent:#FFFFFF;
+  --teal:#0D9488; --teal-wash:#E6F6F4;
+  --line:#E2E8F0; --line-strong:#CBD5E1;
+  --good:#15803D; --good-wash:#E7F6EC;
+  --warn:#B45309; --warn-wash:#FEF3C7;
+  --danger:#B91C1C; --danger-wash:#FDECEC;
+  --tier-a-fg:#0F766E; --tier-a-bg:#CCFBF1;
+  --tier-b-fg:#4338CA; --tier-b-bg:#E0E7FF;
+  --tier-c-fg:#B45309; --tier-c-bg:#FEF3C7;
+  --bubble-me:#4F46E5; --bubble-me-ink:#FFFFFF;
+  --bubble-them:#EEF2F7; --bubble-them-ink:#1E293B;
+  --shadow-1:0 1px 2px rgba(15,23,42,.06);
+  --shadow-2:0 6px 20px -8px rgba(15,23,42,.22);
+  --r-sm:8px; --r:12px; --r-lg:18px;
+  --sans:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --display:'Manrope','Inter',system-ui,sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,'SF Mono',Menlo,monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#0F172A; --surface:#1B2436; --surface-2:#182135; --surface-3:#243044;
+    --ink:#E2E8F0; --ink-soft:#94A3B8; --ink-faint:#64748B;
+    --accent:#818CF8; --accent-strong:#A5B4FC; --accent-wash:#242C4A; --on-accent:#0F172A;
+    --teal:#2DD4BF; --teal-wash:#12332F;
+    --line:#2E3B52; --line-strong:#3E4C66;
+    --good:#4ADE80; --good-wash:#14301F;
+    --warn:#FBBF24; --warn-wash:#33280D;
+    --danger:#F87171; --danger-wash:#3A1A1A;
+    --tier-a-fg:#5EEAD4; --tier-a-bg:#12332F;
+    --tier-b-fg:#A5B4FC; --tier-b-bg:#252D4D;
+    --tier-c-fg:#FCD34D; --tier-c-bg:#33280D;
+    --bubble-me:#4F46E5; --bubble-me-ink:#F8FAFF;
+    --bubble-them:#243044; --bubble-them-ink:#E2E8F0;
+    --shadow-1:0 1px 2px rgba(0,0,0,.4);
+    --shadow-2:0 8px 24px -10px rgba(0,0,0,.6);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0F172A; --surface:#1B2436; --surface-2:#182135; --surface-3:#243044;
+  --ink:#E2E8F0; --ink-soft:#94A3B8; --ink-faint:#64748B;
+  --accent:#818CF8; --accent-strong:#A5B4FC; --accent-wash:#242C4A; --on-accent:#0F172A;
+  --teal:#2DD4BF; --teal-wash:#12332F;
+  --line:#2E3B52; --line-strong:#3E4C66;
+  --good:#4ADE80; --good-wash:#14301F;
+  --warn:#FBBF24; --warn-wash:#33280D;
+  --danger:#F87171; --danger-wash:#3A1A1A;
+  --tier-a-fg:#5EEAD4; --tier-a-bg:#12332F;
+  --tier-b-fg:#A5B4FC; --tier-b-bg:#252D4D;
+  --tier-c-fg:#FCD34D; --tier-c-bg:#33280D;
+  --bubble-me:#4F46E5; --bubble-me-ink:#F8FAFF;
+  --bubble-them:#243044; --bubble-them-ink:#E2E8F0;
+  --shadow-1:0 1px 2px rgba(0,0,0,.4);
+  --shadow-2:0 8px 24px -10px rgba(0,0,0,.6);
+}
+*,*::before,*::after{box-sizing:border-box;}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:14px;line-height:1.55;-webkit-font-smoothing:antialiased;}
+h1,h2,h3,h4{font-family:var(--display);margin:0;text-wrap:balance;line-height:1.2;letter-spacing:-.01em;}
+p{margin:0;}
+button,input,select,textarea{font:inherit;color:inherit;}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px;}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important;}}
+
+/* ---------- shell ---------- */
+#app{min-height:100vh;display:flex;flex-direction:column;}
+.topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;background:var(--surface);border-bottom:1px solid var(--line);}
+.topbar-inner{display:flex;align-items:center;gap:14px;padding:10px 16px;max-width:1280px;margin:0 auto;width:100%;}
+.wordmark{display:flex;align-items:center;gap:9px;font-family:var(--display);font-weight:800;font-size:16px;letter-spacing:-.02em;white-space:nowrap;}
+.wordmark .glyph{width:26px;height:26px;border-radius:8px;background:linear-gradient(135deg,var(--accent),var(--teal));display:grid;place-items:center;color:#fff;font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:0;}
+.topbar-spacer{flex:1;}
+.whoami{display:flex;align-items:center;gap:8px;min-width:0;}
+.whoami .nm{font-weight:600;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:150px;}
+.tab-rail{background:var(--surface);border-bottom:1px solid var(--line);}
+.tab-rail-inner{display:flex;gap:2px;padding:0 10px;max-width:1280px;margin:0 auto;overflow-x:auto;}
+.tab-btn{position:relative;background:none;border:0;padding:11px 12px 12px;font-size:13px;font-weight:600;color:var(--ink-soft);cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;transition:color .12s,border-color .12s;}
+.tab-btn:hover{color:var(--ink);}
+.tab-btn.active{color:var(--accent);border-bottom-color:var(--accent);}
+.tab-badge{display:inline-block;margin-left:6px;min-width:18px;padding:0 5px;border-radius:9px;background:var(--accent);color:var(--on-accent);font-family:var(--mono);font-size:10px;font-weight:600;line-height:18px;text-align:center;vertical-align:1px;}
+#view{flex:1;width:100%;max-width:1280px;margin:0 auto;padding:22px 16px 56px;}
+.col{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:18px;}
+
+/* ---------- type utilities ---------- */
+.eyebrow{font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-faint);}
+.h-page{font-size:23px;font-weight:800;}
+.h-sec{font-size:16px;font-weight:700;}
+.sub{color:var(--ink-soft);font-size:13.5px;max-width:62ch;}
+.mini{font-family:var(--mono);font-size:10.5px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-faint);}
+.num{font-variant-numeric:tabular-nums;}
+hr.rule{border:0;border-top:1px solid var(--line);margin:4px 0;}
+
+/* ---------- surfaces ---------- */
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:20px;box-shadow:var(--shadow-1);}
+.panel.flush{padding:0;overflow:hidden;}
+.stack{display:flex;flex-direction:column;gap:14px;}
+.row{display:flex;align-items:center;gap:12px;}
+.row.wrap{flex-wrap:wrap;}
+
+/* ---------- controls ---------- */
+.field{display:flex;flex-direction:column;gap:6px;}
+.field > label{font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);}
+input[type=text],input[type=email],input[type=search],input[type=datetime-local],input[type=number],select,textarea{
+  width:100%;padding:9px 11px;background:var(--surface);color:var(--ink);
+  border:1px solid var(--line-strong);border-radius:var(--r-sm);font-size:14px;}
+textarea{resize:vertical;min-height:84px;line-height:1.5;}
+input::placeholder,textarea::placeholder{color:var(--ink-faint);}
+select{cursor:pointer;}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:9px 16px;border-radius:var(--r-sm);border:1px solid transparent;font-size:13.5px;font-weight:600;cursor:pointer;transition:background .12s,border-color .12s,opacity .12s;white-space:nowrap;}
+.btn:disabled{opacity:.5;cursor:not-allowed;}
+.btn.primary{background:var(--accent);color:var(--on-accent);}
+.btn.primary:not(:disabled):hover{background:var(--accent-strong);}
+.btn.ghost{background:var(--surface);border-color:var(--line-strong);color:var(--ink);}
+.btn.ghost:not(:disabled):hover{background:var(--surface-3);}
+.btn.quiet{background:none;color:var(--ink-soft);padding:6px 9px;}
+.btn.quiet:hover{background:var(--surface-3);color:var(--ink);}
+.btn.danger{background:var(--danger-wash);color:var(--danger);border-color:transparent;}
+.btn.sm{padding:6px 11px;font-size:12.5px;}
+.btn.block{width:100%;}
+.icon-btn{background:none;border:0;padding:5px 7px;border-radius:6px;color:var(--ink-faint);cursor:pointer;font-size:14px;line-height:1;}
+.icon-btn:hover{background:var(--surface-3);color:var(--ink);}
+.checkline{display:flex;align-items:flex-start;gap:9px;font-size:13.5px;cursor:pointer;}
+.checkline input{margin-top:3px;flex:none;}
+.err{background:var(--danger-wash);color:var(--danger);border-radius:var(--r-sm);padding:9px 12px;font-size:13px;font-weight:500;}
+.note{background:var(--surface-2);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;font-size:13px;color:var(--ink-soft);}
+.note.warn{background:var(--warn-wash);border-color:transparent;color:var(--warn);}
+.empty{padding:26px 18px;text-align:center;color:var(--ink-faint);font-size:13.5px;border:1px dashed var(--line-strong);border-radius:var(--r);}
+
+/* ---------- identity bits ---------- */
+.av{flex:none;border-radius:50%;object-fit:cover;background:var(--surface-3);display:block;}
+.av.s{width:34px;height:34px;} .av.m{width:42px;height:42px;} .av.l{width:60px;height:60px;}
+.presence{position:relative;flex:none;display:inline-block;line-height:0;}
+.presence .dot{position:absolute;right:-1px;bottom:-1px;width:11px;height:11px;border-radius:50%;background:var(--ink-faint);border:2px solid var(--surface);}
+.presence.online .dot{background:var(--good);}
+.pill{display:inline-flex;align-items:center;gap:5px;padding:2px 8px;border-radius:999px;font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.04em;}
+.pill.tier-a{background:var(--tier-a-bg);color:var(--tier-a-fg);}
+.pill.tier-b{background:var(--tier-b-bg);color:var(--tier-b-fg);}
+.pill.tier-c{background:var(--tier-c-bg);color:var(--tier-c-fg);}
+.pill.ok{background:var(--good-wash);color:var(--good);}
+.pill.teal{background:var(--teal-wash);color:var(--teal);}
+.pill.warn{background:var(--warn-wash);color:var(--warn);}
+.langchip{display:inline-flex;align-items:center;gap:6px;padding:4px 10px 4px 11px;border-radius:999px;background:var(--surface-2);border:1px solid var(--line);font-size:12.5px;font-weight:500;}
+.langchip.speak{border-color:color-mix(in srgb,var(--teal) 34%,var(--line));}
+.langchip.practice{border-color:color-mix(in srgb,var(--accent) 34%,var(--line));}
+.chips{display:flex;flex-wrap:wrap;gap:7px;}
+.tz{font-family:var(--mono);font-size:11.5px;color:var(--ink-faint);}
+
+/* ---------- conversations ---------- */
+.conv-grid{display:grid;grid-template-columns:320px 1fr;gap:18px;align-items:start;}
+.conv-list{display:flex;flex-direction:column;}
+.conv-list-head{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:13px 15px;border-bottom:1px solid var(--line);}
+.conv-scroll{max-height:clamp(320px,58vh,660px);overflow-y:auto;}
+.conv-group-label{padding:9px 15px 5px;font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);background:var(--surface-2);border-bottom:1px solid var(--line);}
+.conv-row{display:flex;align-items:center;gap:11px;width:100%;padding:11px 14px;background:none;border:0;border-bottom:1px solid var(--line);cursor:pointer;text-align:left;}
+.conv-row:hover{background:var(--surface-2);}
+.conv-row.active{background:var(--accent-wash);}
+.conv-row .body{flex:1;min-width:0;}
+.conv-row .nm{font-weight:600;font-size:13.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:flex;align-items:center;gap:6px;}
+.conv-row .prev{font-size:12.5px;color:var(--ink-soft);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.conv-row .meta{display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex:none;}
+.conv-row .when{font-family:var(--mono);font-size:10.5px;color:var(--ink-faint);}
+.unread-dot{min-width:18px;height:18px;padding:0 5px;border-radius:9px;background:var(--accent);color:var(--on-accent);font-family:var(--mono);font-size:10px;font-weight:600;line-height:18px;text-align:center;}
+.thread{display:flex;flex-direction:column;min-height:0;}
+.thread-head{display:flex;align-items:center;gap:11px;padding:12px 16px;border-bottom:1px solid var(--line);}
+.thread-head .body{flex:1;min-width:0;}
+.msgs{height:clamp(300px,50vh,560px);overflow-y:auto;padding:18px 16px;display:flex;flex-direction:column;gap:3px;background:var(--surface-2);}
+.msg{max-width:min(78%,520px);display:flex;flex-direction:column;gap:3px;}
+.msg.me{align-self:flex-end;align-items:flex-end;}
+.msg.them{align-self:flex-start;}
+.msg + .msg{margin-top:9px;}
+.bubble{padding:8px 12px;border-radius:16px;font-size:14px;line-height:1.5;word-break:break-word;white-space:pre-wrap;}
+.msg.me .bubble{background:var(--bubble-me);color:var(--bubble-me-ink);border-bottom-right-radius:5px;}
+.msg.them .bubble{background:var(--bubble-them);color:var(--bubble-them-ink);border-bottom-left-radius:5px;}
+.msg-foot{display:flex;align-items:center;gap:7px;font-family:var(--mono);font-size:10px;color:var(--ink-faint);}
+.msg-foot .act{background:none;border:0;padding:0;color:var(--ink-faint);cursor:pointer;font:inherit;text-decoration:underline;text-underline-offset:2px;}
+.msg-foot .act:hover{color:var(--accent);}
+.translation{border-left:2px solid var(--teal);padding:5px 0 5px 9px;font-size:13px;color:var(--ink-soft);font-style:italic;}
+.composer{display:flex;gap:9px;padding:12px 14px;border-top:1px solid var(--line);align-items:flex-end;}
+.composer textarea{min-height:40px;max-height:150px;border-radius:var(--r);}
+.daysep{align-self:center;font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);padding:8px 0 2px;}
+.back-btn{display:none;}
+
+/* ---------- discover / teachers ---------- */
+.cardgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:14px;}
+.person-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:16px;display:flex;flex-direction:column;gap:11px;box-shadow:var(--shadow-1);}
+.person-card .hd{display:flex;gap:11px;align-items:center;}
+.person-card .hd .body{min-width:0;flex:1;}
+.person-card .nm{font-family:var(--display);font-weight:700;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.person-card .bio{font-size:13px;color:var(--ink-soft);}
+.match-strip{display:flex;align-items:center;gap:7px;padding:7px 10px;border-radius:var(--r-sm);background:var(--surface-2);font-size:12px;color:var(--ink-soft);border-left:3px solid var(--line-strong);}
+.match-strip.mutual{border-left-color:var(--teal);background:var(--teal-wash);color:var(--teal);font-weight:600;}
+.filters{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;}
+
+/* ---------- test / practice / assignments ---------- */
+.q-card{border:1px solid var(--line);border-radius:var(--r);padding:15px;display:flex;flex-direction:column;gap:9px;background:var(--surface);}
+.q-opts{display:flex;flex-direction:column;gap:6px;}
+.q-opt{display:flex;align-items:flex-start;gap:9px;padding:8px 11px;border:1px solid var(--line);border-radius:var(--r-sm);cursor:pointer;font-size:13.5px;}
+.q-opt:hover{border-color:var(--line-strong);background:var(--surface-2);}
+.q-opt input{margin-top:3px;flex:none;}
+.result-card{display:flex;flex-direction:column;align-items:center;gap:5px;padding:26px 20px;border-radius:var(--r-lg);background:var(--accent-wash);}
+.result-level{font-family:var(--mono);font-size:44px;font-weight:600;letter-spacing:.02em;color:var(--accent);line-height:1;}
+.streak-card{display:flex;align-items:center;gap:18px;padding:18px 20px;border-radius:var(--r-lg);background:linear-gradient(120deg,var(--accent-wash),var(--teal-wash));}
+.streak-n{font-family:var(--mono);font-size:40px;font-weight:600;line-height:1;color:var(--accent);}
+.streak-ladder{display:flex;gap:4px;margin-top:8px;}
+.streak-ladder i{width:13px;height:5px;border-radius:3px;background:var(--line-strong);display:block;}
+.streak-ladder i.on{background:var(--teal);}
+.feedback{background:var(--good-wash);border-radius:var(--r);padding:13px 15px;font-size:13.5px;line-height:1.6;white-space:pre-wrap;}
+.thinking{display:flex;align-items:center;gap:9px;color:var(--ink-soft);font-size:13.5px;padding:14px 0;}
+.spin{width:14px;height:14px;border-radius:50%;border:2px solid var(--line-strong);border-top-color:var(--accent);animation:spin .7s linear infinite;flex:none;}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+/* ---------- certificates / rooms / schedule ---------- */
+.cert-row{display:flex;align-items:center;gap:12px;padding:11px;border:1px solid var(--line);border-radius:var(--r);}
+.cert-thumb{width:64px;height:46px;object-fit:cover;border-radius:6px;border:1px solid var(--line);flex:none;background:var(--surface-3);}
+.cert-preview{max-width:220px;border-radius:var(--r-sm);border:1px solid var(--line);margin-top:8px;}
+.cert-badge{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:999px;background:var(--warn-wash);color:var(--warn);font-size:11.5px;font-weight:600;}
+.list-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border-bottom:1px solid var(--line);}
+.list-row:last-child{border-bottom:0;}
+.list-row .body{flex:1;min-width:0;}
+.when-block{flex:none;width:62px;text-align:center;padding:6px 0;border-radius:var(--r-sm);background:var(--surface-2);}
+.when-block .d{font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);}
+.when-block .t{font-family:var(--mono);font-size:13px;font-weight:600;}
+.room-msgs{height:clamp(240px,40vh,420px);overflow-y:auto;padding:15px;display:flex;flex-direction:column;gap:12px;background:var(--surface-2);}
+.room-msg .who{font-size:12px;font-weight:600;color:var(--accent);margin-bottom:2px;}
+.room-msg .txt{font-size:13.5px;white-space:pre-wrap;word-break:break-word;}
+
+/* ---------- ads ---------- */
+.ad{border:1px dashed var(--line-strong);border-radius:var(--r);padding:12px 14px;background:var(--surface-2);}
+.ad .lbl{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-faint);}
+.ad .hl{font-weight:600;font-size:13.5px;margin-top:3px;}
+.ad .sb{font-size:12.5px;color:var(--ink-soft);}
+
+/* ---------- overlays ---------- */
+#toast-layer{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(20px + env(safe-area-inset-bottom,0px));z-index:70;display:flex;flex-direction:column;gap:8px;align-items:center;pointer-events:none;width:calc(100% - 32px);max-width:420px;}
+.toast{background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:999px;font-size:13px;font-weight:500;box-shadow:var(--shadow-2);}
+#modal-layer:empty,#menu-layer:empty,#call-layer:empty{display:none;}
+#modal-layer{position:fixed;inset:0;z-index:80;background:rgba(15,23,42,.5);display:grid;place-items:center;padding:20px;}
+.modal{background:var(--surface);border-radius:var(--r-lg);padding:22px;max-width:400px;width:100%;box-shadow:var(--shadow-2);display:flex;flex-direction:column;gap:14px;}
+#menu-layer{position:fixed;inset:0;z-index:60;}
+.menu{position:absolute;min-width:214px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow-2);padding:5px;display:flex;flex-direction:column;}
+.menu button{background:none;border:0;text-align:left;padding:8px 11px;border-radius:6px;font-size:13px;cursor:pointer;color:var(--ink);}
+.menu button:hover{background:var(--surface-3);}
+.menu button.danger{color:var(--danger);}
+#call-layer{position:fixed;inset:0;z-index:75;background:#0B1120;display:flex;flex-direction:column;padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px);}
+.call-stage{flex:1;position:relative;display:grid;place-items:center;overflow:hidden;}
+.call-stage video.remote{width:100%;height:100%;object-fit:cover;background:#0B1120;}
+.call-stage video.local{position:absolute;right:16px;bottom:16px;width:min(30%,170px);aspect-ratio:3/4;object-fit:cover;border-radius:var(--r);border:2px solid rgba(255,255,255,.22);background:#0B1120;}
+.call-info{position:absolute;top:18px;left:0;right:0;text-align:center;color:#fff;display:flex;flex-direction:column;gap:4px;padding:0 16px;}
+.call-info .nm{font-family:var(--display);font-weight:700;font-size:19px;}
+.call-info .st{font-family:var(--mono);font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:rgba(255,255,255,.66);}
+.call-bar{display:flex;justify-content:center;gap:12px;padding:20px 16px 26px;}
+.call-btn{width:52px;height:52px;border-radius:50%;border:0;background:rgba(255,255,255,.14);color:#fff;font-size:19px;cursor:pointer;display:grid;place-items:center;}
+.call-btn:hover{background:rgba(255,255,255,.24);}
+.call-btn.off{background:#fff;color:#0B1120;}
+.call-btn.hang{background:#DC2626;}
+.call-btn.accept{background:#16A34A;}
+.incoming{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:65;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--shadow-2);padding:15px;display:flex;flex-direction:column;gap:11px;max-width:300px;}
+.call-btn-wrap{display:flex;flex-direction:column;align-items:center;gap:6px;}
+.call-btn-wrap span{font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.6);}
+.call-demo-av{width:120px;height:120px;border-radius:50%;object-fit:cover;box-shadow:0 0 0 0 rgba(129,140,248,.5);animation:ring 1.6s ease-out infinite;}
+.call-demo-av.live{animation:none;box-shadow:0 0 0 6px rgba(45,212,191,.35);}
+@keyframes ring{0%{box-shadow:0 0 0 0 rgba(129,140,248,.55);}100%{box-shadow:0 0 0 34px rgba(129,140,248,0);}}
+.call-demo-note{color:rgba(255,255,255,.55);font-size:12px;max-width:44ch;margin:4px auto 0;}
+.call-stage .cam-off{position:absolute;right:16px;bottom:16px;width:min(30%,170px);aspect-ratio:3/4;border-radius:var(--r);border:2px solid rgba(255,255,255,.22);background:#1E293B;display:grid;place-items:center;color:rgba(255,255,255,.6);font-size:12px;text-align:center;padding:8px;}
+
+/* ---------- friend sheet ---------- */
+.modal.sheet{max-width:440px;max-height:calc(100vh - 40px);overflow-y:auto;}
+.sheet-head{display:flex;align-items:center;gap:14px;}
+.sheet-head .nm{font-family:var(--display);font-weight:800;font-size:18px;}
+.sheet-actions{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+.sheet-act{display:flex;flex-direction:column;align-items:center;gap:4px;padding:11px 6px;border:1px solid var(--line);border-radius:var(--r);background:var(--surface-2);cursor:pointer;font-size:12px;font-weight:600;color:var(--ink);}
+.sheet-act:hover{background:var(--surface-3);}
+.sheet-act .ic{font-size:18px;line-height:1;}
+.sheet-act.on{background:var(--accent-wash);border-color:color-mix(in srgb,var(--accent) 40%,var(--line));color:var(--accent);}
+.sheet-list{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;}
+.sheet-list button{display:flex;align-items:center;gap:10px;background:var(--surface);border:0;border-bottom:1px solid var(--line);padding:11px 13px;text-align:left;font-size:13.5px;cursor:pointer;color:var(--ink);}
+.sheet-list button:last-child{border-bottom:0;}
+.sheet-list button:hover{background:var(--surface-2);}
+.sheet-list button.danger{color:var(--danger);}
+.av-btn{background:none;border:0;padding:0;cursor:pointer;border-radius:50%;line-height:0;}
+.name-btn{background:none;border:0;padding:0;cursor:pointer;text-align:left;font:inherit;color:inherit;}
+.name-btn:hover{text-decoration:underline;text-underline-offset:3px;}
+.fav{color:#F59E0B;}
+.reason-list{display:flex;flex-direction:column;gap:6px;}
+
+/* ---------- quiz review ---------- */
+.seg{display:inline-flex;align-self:flex-start;background:var(--surface-3);border-radius:999px;padding:3px;gap:2px;}
+.seg button{background:none;border:0;border-radius:999px;padding:7px 15px;font-size:13px;font-weight:600;color:var(--ink-soft);cursor:pointer;}
+.seg button.on{background:var(--surface);color:var(--ink);box-shadow:var(--shadow-1);}
+.lvl-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+.lvl-btn{display:flex;flex-direction:column;align-items:flex-start;gap:6px;padding:11px 12px;border:1px solid var(--line);border-radius:var(--r);background:var(--surface);cursor:pointer;text-align:left;}
+.lvl-btn:hover{border-color:var(--line-strong);background:var(--surface-2);}
+.lvl-btn.on{border-color:var(--accent);background:var(--accent-wash);box-shadow:0 0 0 1px var(--accent) inset;}
+.lvl-btn .lvl-name{font-size:12.5px;font-weight:600;color:var(--ink-soft);}
+.lvl-btn.on .lvl-name{color:var(--accent);}
+.quiz-sec{margin-top:6px;}
+.grade-card{display:flex;align-items:center;gap:20px;padding:20px;border-radius:var(--r-lg);background:var(--accent-wash);}
+.grade-letter{width:76px;height:76px;flex:none;border-radius:50%;display:grid;place-items:center;font-family:var(--display);font-weight:800;font-size:40px;color:#fff;}
+.grade-pct{font-family:var(--mono);font-size:30px;font-weight:600;line-height:1;color:var(--ink);}
+.g-a{background:#15803D;} .g-b{background:#0D9488;} .g-c{background:#4F46E5;} .g-d{background:#B45309;} .g-f{background:#B91C1C;}
+.grade-chip{width:36px;height:36px;flex:none;border-radius:50%;display:grid;place-items:center;font-family:var(--display);font-weight:800;font-size:16px;color:#fff;}
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+.stat{background:var(--surface-2);border:1px solid var(--line);border-radius:var(--r);padding:12px;}
+.stat .n{font-family:var(--mono);font-size:22px;font-weight:600;color:var(--ink);line-height:1.1;}
+.lvl-best{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;}
+.lb{border:1px dashed var(--line-strong);border-radius:var(--r-sm);padding:7px 4px;text-align:center;}
+.lb .lv{font-family:var(--mono);font-size:10.5px;font-weight:600;color:var(--ink-faint);}
+.lb .pc{font-family:var(--mono);font-size:13px;font-weight:600;color:var(--ink-faint);}
+.lb.tried{border-style:solid;background:var(--surface-2);}
+.lb.tried .pc{color:var(--warn);}
+.lb.pass{border-style:solid;border-color:transparent;background:var(--good-wash);}
+.lb.pass .pc,.lb.pass .lv{color:var(--good);}
+.bar{height:5px;border-radius:3px;background:var(--surface-3);margin:6px 0 4px;overflow:hidden;max-width:260px;}
+.bar i{display:block;height:100%;border-radius:3px;}
+.bar i.ok{background:var(--good);} .bar i.warn{background:var(--warn);} .bar i.tier-c{background:var(--danger);}
+.hist-pct{font-family:var(--mono);font-size:16px;font-weight:600;flex:none;}
+@media (max-width:520px){
+  .lvl-grid{grid-template-columns:repeat(2,1fr);}
+  .lvl-best{grid-template-columns:repeat(3,1fr);}
+  .grade-card{gap:14px;padding:16px;}
+  .grade-letter{width:60px;height:60px;font-size:32px;}
+}
+.score-strip{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.rv{border:1px solid var(--line);border-left-width:4px;border-radius:var(--r);padding:13px 15px;display:flex;flex-direction:column;gap:7px;background:var(--surface);}
+.rv.right{border-left-color:var(--good);}
+.rv.wrong{border-left-color:var(--danger);}
+.rv.skip{border-left-color:var(--warn);}
+.rv.write{border-left-color:var(--accent);}
+.rv .ans{font-size:13.5px;display:flex;gap:8px;align-items:baseline;}
+.rv .ans b{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;font-weight:600;min-width:86px;color:var(--ink-faint);}
+.rv .ans.bad span{color:var(--danger);text-decoration:line-through;text-decoration-thickness:1px;}
+.rv .ans.good span{color:var(--good);font-weight:600;}
+.rv .comment{background:var(--surface-2);border-radius:var(--r-sm);padding:9px 11px;font-size:13px;color:var(--ink-soft);line-height:1.55;}
+.rv .comment::before{content:"Comment · ";font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);}
+
+/* ---------- responsive ---------- */
+@media (max-width:860px){
+  .conv-grid{grid-template-columns:1fr;}
+  .conv-grid.showing-thread .conv-list{display:none;}
+  .conv-grid:not(.showing-thread) .thread{display:none;}
+  .back-btn{display:inline-flex;}
+  .conv-scroll{max-height:none;}
+}
+@media (max-width:520px){
+  #view{padding:16px 14px 48px;}
+  .panel{padding:16px;border-radius:var(--r);}
+  .h-page{font-size:20px;}
+  .msg{max-width:88%;}
+  .streak-card{flex-direction:column;align-items:flex-start;gap:10px;}
+  .thread-head{gap:8px;padding:10px 12px;}
+  .thread-head .btn .lbl{display:none;}
+  .thread-head .btn.sm{padding:7px 10px;}
+  .thread-head .tz{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .sheet-actions{gap:6px;}
+}
+.thread-head .name-btn{max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block;}
+</style>
+<div id="app">
+  <header class="topbar"><div class="topbar-inner">
+    <div class="wordmark"><span class="glyph">LC</span>LinguaConnect</div>
+    <div class="topbar-spacer"></div>
+    <div class="whoami" id="whoami"></div>
+  </div></header>
+  <nav class="tab-rail" id="tab-rail" hidden><div class="tab-rail-inner" id="tab-rail-inner"></div></nav>
+  <main id="view"></main>
+</div>
+<div id="toast-layer"></div>
+<div id="menu-layer"></div>
+<div id="modal-layer"></div>
+<div id="call-layer"></div>
+<script>
+(function(){
+'use strict';
+
+/* ============================================================
+   1. Reference data
+   ============================================================ */
+const LANGS=[["en","English"],["es","Spanish"],["fr","French"],["de","German"],["it","Italian"],
+["pt","Portuguese"],["nl","Dutch"],["sv","Swedish"],["no","Norwegian"],["da","Danish"],
+["pl","Polish"],["ru","Russian"],["uk","Ukrainian"],["cs","Czech"],["ro","Romanian"],
+["el","Greek"],["tr","Turkish"],["ar","Arabic"],["he","Hebrew"],["hi","Hindi"],
+["bn","Bengali"],["ur","Urdu"],["zh","Mandarin"],["yue","Cantonese"],["ja","Japanese"],
+["ko","Korean"],["vi","Vietnamese"],["th","Thai"],["id","Indonesian"],["ms","Malay"],
+["tl","Tagalog"],["sw","Swahili"],["fi","Finnish"],["hu","Hungarian"],["ca","Catalan"]];
+const LEVELS=["A1","A2","B1","B2","C1","C2"];
+const LEVEL_LABEL={A1:"Beginner",A2:"Elementary",B1:"Intermediate",B2:"Upper-int.",C1:"Advanced",C2:"Mastery"};
+const TIMEZONES=["Pacific/Midway","Pacific/Honolulu","America/Anchorage","America/Los_Angeles","America/Tijuana",
+"America/Denver","America/Phoenix","America/Chicago","America/Mexico_City","America/New_York",
+"America/Toronto","America/Bogota","America/Lima","America/Santiago","America/Sao_Paulo",
+"America/Buenos_Aires","Atlantic/Azores","Europe/London","Europe/Dublin","Europe/Lisbon",
+"Europe/Madrid","Europe/Paris","Europe/Berlin","Europe/Rome","Europe/Amsterdam",
+"Europe/Warsaw","Europe/Athens","Europe/Istanbul","Europe/Moscow","Africa/Cairo",
+"Africa/Lagos","Africa/Johannesburg","Africa/Nairobi","Asia/Jerusalem","Asia/Dubai",
+"Asia/Karachi","Asia/Kolkata","Asia/Dhaka","Asia/Bangkok","Asia/Jakarta",
+"Asia/Shanghai","Asia/Singapore","Asia/Hong_Kong","Asia/Tokyo","Asia/Seoul",
+"Australia/Perth","Australia/Sydney","Pacific/Auckland"];
+const CERT_TYPES=["TOEFL","IELTS","Cambridge English (FCE / CAE / CPE)","Goethe-Zertifikat","TestDaF",
+"DELE","DELF / DALF","CILS / PLIDA","HSK","JLPT","TOPIK","CELPIP","Other"];
+const PLATFORM_FEE_PCT=15;
+const TABS=[["conversations","Conversations"],["discover","Discover"],["test-level","Quiz Yourself"],
+["groups","Groups"],["schedule","Schedule"],["practice","Practice"],["profile","Profile"],
+["find-teacher","Find a Teacher"],["become-teacher","Become a Teacher"]];
+const PRACTICE_PROMPTS=[
+"Describe your morning routine out loud in the language you are practising.",
+"Write three sentences about your weekend plans.",
+"Order a coffee out loud, imagining you are at a cafe abroad.",
+"Name five things you can see right now, in your practice language.",
+"Introduce yourself as if meeting someone for the first time.",
+"Describe what you had for lunch today.",
+"Talk through how to get from your home to the nearest shop.",
+"Give your honest opinion on a film you have seen recently."];
+const ADS=[
+{h:"Writing help built for language learners",s:"Catch the mistakes before you hit send."},
+{h:"Noise-cancelling headsets, 20% off",s:"Built for clearer calls."},
+{h:"Study abroad programmes - apply by 1 March",s:"Semester and summer options."},
+{h:"Flashcard app of the year",s:"Sync your vocabulary across devices."}];
+const MAX_MSGS=280;            /* per thread doc, to stay under the 256 KiB doc cap */
+const MAX_CERT_CHARS=150000;   /* base64 budget for one certificate image */
+const REPORT_REASONS=["Spam or scam","Harassment or bullying","Inappropriate or sexual content","Fake profile","Not here to learn languages","Other"];
+const EMAIL_RE=/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+/* Built-in practice partners that live only in this browser. They always
+   match you, so calls, the friend sheet and chat can be tried before a
+   second real person joins. Nothing about them is written to the database.
+   Sofía starts as a conversation (she has said hello); Lukas starts as a
+   new match and becomes a conversation once you send the first message. */
+const DEMOS=[
+  {id:"demo_partner",name:"Sofía (demo)",first:"Sofía",tz:"Europe/Madrid",
+   greet:"¡Hola! I'm your demo partner. Try the Call and Video buttons above, or tap my photo to see favourite, archive, block and report.",
+   bio:"I'm a built-in demo partner so you can try chat, phone and video calls before your first real match. Nobody is on the other end."},
+  {id:"demo_match",name:"Lukas (demo)",first:"Lukas",tz:"Europe/Berlin",greet:"",
+   bio:"A second demo partner. We haven't talked yet - send me the first message and I move from New matches to Conversations."}];
+function demoOf(id){ return DEMOS.filter(d=>d.id===id)[0]||null; }
+function isDemo(id){ return !!demoOf(id); }
+const DEMO_REPLIES=[
+  "Nice! Tell me more - what made you start learning?",
+  "Nice sentence! One small thing: try it again using the past tense.",
+  "Haha, I love that. Want to try a quick video call? Tap Video up top.",
+  "Good question. How would you say that in your own words first?",
+  "Let's practise ordering food - you're the customer, I'm the waiter."];
+
+/* ============================================================
+   2. Small helpers
+   ============================================================ */
+const $=id=>document.getElementById(id);
+const esc=s=>String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const langName=code=>{const l=LANGS.find(x=>x[0]===code);return l?l[1]:code;};
+const tierOf=lv=>String(lv||"B1")[0].toLowerCase();
+const convId=(a,b)=>[a,b].sort().join("__");
+const clamp=(n,lo,hi)=>Math.max(lo,Math.min(hi,n));
+const byTs=(a,b)=>b.ts-a.ts;
+
+function levelPill(lv){
+  const L=String(lv||"B1").toUpperCase();
+  return '<span class="pill tier-'+tierOf(L)+'" title="'+esc(LEVEL_LABEL[L]||"")+'">'+esc(L)+'</span>';
+}
+function tzLabel(tz){
+  if(!tz) return "Timezone not set";
+  try{
+    const off=new Intl.DateTimeFormat("en-US",{timeZone:tz,timeZoneName:"shortOffset"})
+      .formatToParts(new Date()).find(p=>p.type==="timeZoneName");
+    return tz.replace(/_/g," ")+(off?" "+off.value:"");
+  }catch(e){ return tz.replace(/_/g," "); }
+}
+function tzNow(tz){
+  if(!tz) return "";
+  try{ return new Intl.DateTimeFormat("en-GB",{timeZone:tz,hour:"2-digit",minute:"2-digit"}).format(new Date()); }
+  catch(e){ return ""; }
+}
+const DEFAULT_TZ=(function(){
+  let tz="Europe/Madrid";
+  try{ tz=Intl.DateTimeFormat().resolvedOptions().timeZone||tz; }catch(e){}
+  return TIMEZONES.indexOf(tz)>=0?tz:"Europe/Madrid";
+})();
+function timeAgo(ts){
+  const s=Math.floor((Date.now()-ts)/1000);
+  if(s<60) return "now";
+  if(s<3600) return Math.floor(s/60)+"m";
+  if(s<86400) return Math.floor(s/3600)+"h";
+  if(s<604800) return Math.floor(s/86400)+"d";
+  return new Date(ts).toLocaleDateString(undefined,{month:"short",day:"numeric"});
+}
+function clockTime(ts){ return new Date(ts).toLocaleTimeString(undefined,{hour:"2-digit",minute:"2-digit"}); }
+function dayKey(ts){ return new Date(ts).toDateString(); }
+function dayLabel(ts){
+  const t=new Date().toDateString(), y=new Date(Date.now()-86400000).toDateString(), d=dayKey(ts);
+  if(d===t) return "Today";
+  if(d===y) return "Yesterday";
+  return new Date(ts).toLocaleDateString(undefined,{weekday:"long",month:"short",day:"numeric"});
+}
+function todayStr(){
+  const d=new Date();
+  return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+}
+function dayDiff(a,b){ return Math.round((new Date(b+"T00:00:00")-new Date(a+"T00:00:00"))/86400000); }
+function truncate(s,n){ s=String(s||""); return s.length>n?s.slice(0,n-1)+"…":s; }
+function normLangs(arr){
+  return (Array.isArray(arr)?arr:[]).map(e=>typeof e==="string"?{code:e,level:"B1"}:e)
+    .filter(e=>e&&e.code).map(e=>({code:e.code,level:LEVELS.indexOf(e.level)>=0?e.level:"B1"}));
+}
+/* Initials avatar, used whenever there is no account photo (and for the demo). */
+function initialsAvatar(name,seed){
+  const parts=String(name||"?").replace(/\(.*?\)/g,"").trim().split(/\s+/);
+  const ini=((parts[0]||"?")[0]+((parts[1]||"")[0]||"")).toUpperCase();
+  const hues=[238,172,24,330,200,280];
+  let h=0; String(seed||name).split("").forEach(c=>{ h=(h*31+c.charCodeAt(0))|0; });
+  const hue=hues[Math.abs(h)%hues.length];
+  const svg='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80"><rect width="80" height="80" fill="hsl('+hue+',55%,52%)"/>'+
+    '<text x="40" y="51" font-family="Inter,Arial,sans-serif" font-size="30" font-weight="700" fill="#fff" text-anchor="middle">'+
+    ini.replace(/[<&>]/g,"")+'</text></svg>';
+  return "data:image/svg+xml;charset=utf-8,"+encodeURIComponent(svg);
+}
+function adFor(seed){
+  const a=ADS[Math.abs(seed|0)%ADS.length];
+  return '<div class="ad"><div class="lbl">Sponsored · demo placeholder</div>'+
+    '<div class="hl">'+esc(a.h)+'</div><div class="sb">'+esc(a.s)+'</div></div>';
+}
+
+/* ============================================================
+   3. State. Every timer / subscription handle is declared here,
+      explicitly, before anything can reference it.
+   ============================================================ */
+let db=null, userCap=null, sampleFn=null, roomCap=null;
+let capsSettled=false;
+
+const S={
+  uid:null, me:null, canWrite:null,
+  profile:null, profileLoaded:false,
+  profiles:[],              /* every profile doc, including mine */
+  people:{},                /* id -> resolved Profile from the user capability */
+  settings:{pins:[],mutes:[],blocks:[],archives:[],favorites:[],quizHistory:[],lastRead:{},streak:{count:0,lastDate:""},schedule:[],premium:false},
+  account:{email:"",emailVerified:false}, accountLoaded:false,
+  demoConvs:{}, demoTyping:{}, demoRing:null, demoReplyN:0,
+  convs:[], threads:{}, certs:[], rooms:[], roomLog:{}, assignments:[], reports:[],
+  online:{},
+  tab:"conversations", selected:null, showArchived:false,
+  draft:{}, editingIdx:null, editDraft:"", translations:{}, translating:null,
+  discover:{q:"",lang:"",level:"",tz:""},
+  onboard:null, onboardErr:"", onboardBusy:false,
+  edit:null, editErr:"", editBusy:false,
+  test:{status:"idle",lang:"",level:"",qs:[],answers:{},err:"",view:"take",onlyMistakes:false,score:null},
+  assign:{status:"idle",prompt:"",response:"",feedback:"",err:"",sentTo:null},
+  groups:{activeId:null,draft:"",newName:"",err:""},
+  sched:{withId:"",when:"",note:"",err:""},
+  teacher:{lang:"",certType:CERT_TYPES[0],score:"",imgData:"",imgName:"",err:"",busy:false,bio:"",rate:"",listed:false,dirty:false},
+  banner:""
+};
+
+let unsub={};            /* name -> Unsubscribe */
+let clockHandle=null;    /* setInterval handle for the local-time clocks */
+let toastHandles=[];     /* setTimeout handles for toasts */
+let presenceHandle=null; /* setInterval handle for presence heartbeat */
+
+/* ---- serialised writes: one in flight per document path ---- */
+const writeQ=new Map();
+function qWrite(path,fn){
+  const prev=writeQ.get(path)||Promise.resolve();
+  const next=prev.then(fn,fn).catch(e=>{ console.warn("write failed",path,e); throw e; });
+  writeQ.set(path,next.catch(()=>{}));
+  return next;
+}
+
+/* ============================================================
+   4. Data layer
+   ============================================================ */
+function profDoc(id){ return db.doc("profiles/"+id); }
+function threadDoc(cid){ return db.doc("threads/"+cid); }
+function convDoc(cid){ return db.doc("conversations/"+cid); }
+function settingsDoc(){ return db.doc("data/users/"+S.uid+"/settings"); }
+/* Email lives under data/users/<you>/, which only you can read - never on
+   the shared profile doc that every member can see. */
+function accountDoc(){ return db.doc("data/users/"+S.uid+"/account"); }
+async function saveEmail(email){
+  const clean=String(email||"").trim().toLowerCase();
+  const changed=clean!==(S.account.email||"");
+  const next={email:clean,emailVerified:changed?false:!!S.account.emailVerified,updatedAt:Date.now()};
+  await qWrite("account",()=>accountDoc().set(next));
+  S.account=next;
+}
+
+function demoProfile(d,i){
+  const me=S.profile||{};
+  const targets=normLangs(me.practices);
+  const target=(targets[i]||targets[0]||{code:"es"}).code;
+  const mine=(normLangs(me.speaks).filter(e=>e.level==="C2")[0]||{code:"en"}).code;
+  return {id:d.id,isDemo:true,timezone:d.tz,verifiedLevels:{},
+    speaks:[{code:target,level:"C2"}],practices:[{code:mine,level:"B1"}],bio:d.bio};
+}
+/* Every real profile plus the demo partners. */
+function allProfiles(){
+  return S.profile?S.profiles.concat(DEMOS.map(demoProfile)):S.profiles.slice();
+}
+function profileOf(id){ return allProfiles().filter(p=>p.id===id)[0]||null; }
+function demoConvStub(id){ return {id:convId(S.uid,id),participants:[S.uid,id].sort()}; }
+function seedDemo(){
+  if(!S.uid) return;
+  DEMOS.forEach(d=>{
+    if(!d.greet||S.demoConvs[d.id]) return;
+    const cid=convId(S.uid,d.id), now=Date.now()-60000;
+    const hello={id:"m_"+d.id+"0",from:d.id,ts:now,text:d.greet};
+    S.threads[cid]={messages:[hello]};
+    S.demoConvs[d.id]=Object.assign(demoConvStub(d.id),{lastTs:now,lastText:truncate(hello.text,90),lastFrom:d.id});
+  });
+}
+async function demoReply(demoId,cid,lastText){
+  const d=demoOf(demoId);
+  S.demoTyping[demoId]=true; render();
+  let text=DEMO_REPLIES[S.demoReplyN++%DEMO_REPLIES.length];
+  const p=profileOf(demoId);
+  const lang=langName(p.speaks[0].code);
+  if(sampleFn){
+    try{
+      const r=await sampleFn("You are "+d.first+", a friendly native "+lang+" speaker on a language-exchange app, chatting with a learner. "+
+        "Reply in 1-2 short sentences, mostly in "+lang+" at an easy level, and gently correct one mistake if there is one. "+
+        "Reply with only the message.\n\nLearner wrote: "+lastText,{modelTier:"quick",cache:false});
+      if(r&&r.text&&r.text.trim()) text=r.text.trim();
+    }catch(e){ await new Promise(res=>setTimeout(res,900)); }
+  }else{
+    await new Promise(res=>setTimeout(res,1100));
+  }
+  const now=Date.now();
+  const msgs=((S.threads[cid]||{}).messages||[]).concat([{id:"m_"+now.toString(36),from:demoId,text:text,ts:now}]).slice(-MAX_MSGS);
+  S.threads[cid]={messages:msgs};
+  S.demoConvs[demoId]=Object.assign(demoConvStub(demoId),S.demoConvs[demoId],{lastTs:now,lastText:truncate(text,90),lastFrom:demoId});
+  S.demoTyping[demoId]=false;
+  if(S.selected===demoId&&S.tab==="conversations") await markRead(cid).catch(()=>{});
+  render();
+  setTimeout(()=>{ const box=view.querySelector(".msgs"); if(box) box.scrollTop=box.scrollHeight; },30);
+}
+
+async function saveProfile(patch){
+  const next=Object.assign({},S.profile,patch,{id:S.uid,updatedAt:Date.now()});
+  await qWrite("profiles/"+S.uid,()=>profDoc(S.uid).set(next));
+  S.profile=next;
+  return next;
+}
+async function saveSettings(patch){
+  const next=Object.assign({},S.settings,patch);
+  S.settings=next;
+  await qWrite("settings",()=>settingsDoc().set(JSON.parse(JSON.stringify(next))));
+  return next;
+}
+async function toggleListEntry(key,id){
+  const arr=(S.settings[key]||[]).slice();
+  const i=arr.indexOf(id);
+  if(i>=0) arr.splice(i,1); else arr.push(id);
+  const patch={}; patch[key]=arr;
+  await saveSettings(patch);
+}
+async function markRead(cid){
+  const lr=Object.assign({},S.settings.lastRead);
+  if(lr[cid]&&Date.now()-lr[cid]<1500) return;
+  lr[cid]=Date.now();
+  await saveSettings({lastRead:lr});
+}
+
+async function sendMessage(cid,otherId,text){
+  const now=Date.now();
+  const msg={id:"m_"+now.toString(36)+Math.random().toString(36).slice(2,6),from:S.uid,text:text,ts:now};
+  const cur=S.threads[cid]||{messages:[]};
+  const msgs=(cur.messages||[]).concat([msg]).slice(-MAX_MSGS);
+  S.threads[cid]={messages:msgs};
+  if(isDemo(otherId)){
+    /* First message turns a demo match into a conversation, same as a real one. */
+    S.demoConvs[otherId]=Object.assign(demoConvStub(otherId),S.demoConvs[otherId],{lastTs:now,lastText:truncate(text,90),lastFrom:S.uid});
+    demoReply(otherId,cid,text);
+    return msg;
+  }
+  await qWrite("threads/"+cid,()=>threadDoc(cid).set({messages:msgs,updatedAt:now}));
+  await qWrite("conversations/"+cid,()=>convDoc(cid).set({
+    participants:[S.uid,otherId].sort(),lastTs:now,lastText:truncate(text,90),lastFrom:S.uid
+  }));
+  return msg;
+}
+async function rewriteThread(cid,msgs,otherId){
+  S.threads[cid]={messages:msgs};
+  const last=msgs[msgs.length-1];
+  if(isDemo(otherId)){
+    S.demoConvs[otherId]=Object.assign(demoConvStub(otherId),S.demoConvs[otherId],{lastTs:last?last.ts:Date.now(),lastText:last?truncate(last.text,90):"",lastFrom:last?last.from:S.uid});
+    return;
+  }
+  await qWrite("threads/"+cid,()=>threadDoc(cid).set({messages:msgs,updatedAt:Date.now()}));
+  await qWrite("conversations/"+cid,()=>convDoc(cid).set({
+    participants:[S.uid,otherId].sort(),
+    lastTs:last?last.ts:Date.now(),
+    lastText:last?truncate(last.text,90):"",
+    lastFrom:last?last.from:S.uid
+  }));
+}
+
+/* Matching rule: you may teach a language only at C2, and only to
+   someone who lists it as a language they are practising. */
+function matchInfo(me,other){
+  if(!me||!other) return {iTeach:[],theyTeach:[],mutual:false,total:0};
+  const theirTargets=(other.practices||[]).map(e=>e.code);
+  const myTargets=(me.practices||[]).map(e=>e.code);
+  const iTeach=(me.speaks||[]).filter(e=>e.level==="C2"&&theirTargets.indexOf(e.code)>=0);
+  const theyTeach=(other.speaks||[]).filter(e=>e.level==="C2"&&myTargets.indexOf(e.code)>=0);
+  return {iTeach:iTeach,theyTeach:theyTeach,mutual:iTeach.length>0&&theyTeach.length>0,total:iTeach.length+theyTeach.length};
+}
+function nameOf(id){
+  if(id===S.uid) return (S.me&&S.me.name)||"You";
+  if(isDemo(id)) return demoOf(id).name;
+  const p=S.people[id];
+  return (p&&p.name)||"Someone";
+}
+function avatarOf(id){
+  if(isDemo(id)) return initialsAvatar(demoOf(id).first,id);
+  const p=S.people[id];
+  return (p&&p.avatarUrl)||initialsAvatar(nameOf(id),id);
+}
+function isOnline(id){ return isDemo(id)||!!S.online[id]; }
+function isFav(id){ return (S.settings.favorites||[]).indexOf(id)>=0; }
+function unreadFor(cid,conv){
+  if(!conv||!conv.lastTs) return 0;
+  if(conv.lastFrom===S.uid) return 0;
+  const seen=S.settings.lastRead[cid]||0;
+  return conv.lastTs>seen?1:0;
+}
+function totalUnread(){
+  let n=0;
+  S.convs.concat(Object.keys(S.demoConvs).map(k=>S.demoConvs[k])).forEach(c=>{
+    const other=(c.participants||[]).filter(x=>x!==S.uid)[0];
+    if(!other||(S.settings.blocks||[]).indexOf(other)>=0) return;
+    if((S.settings.mutes||[]).indexOf(other)>=0) return;
+    n+=unreadFor(c.id,c);
+  });
+  return n;
+}
+
+/* ============================================================
+   5. Render plumbing
+   ============================================================ */
+const view=$("view"), railWrap=$("tab-rail"), rail=$("tab-rail-inner");
+const toastLayer=$("toast-layer"), menuLayer=$("menu-layer"), modalLayer=$("modal-layer"), callLayer=$("call-layer");
+
+/* A re-render must never eat what someone is typing: capture the focused
+   control's value and caret, then put both back afterwards. */
+function grabFocus(){
+  const el=document.activeElement;
+  if(!el||!el.id||!("value" in el)) return null;
+  let start=null,end=null;
+  try{ start=el.selectionStart; end=el.selectionEnd; }catch(e){}
+  return {id:el.id,value:el.value,start:start,end:end,scroll:el.scrollTop};
+}
+function putFocus(f){
+  if(!f) return;
+  const el=$(f.id);
+  if(!el) return;
+  if("value" in el && el.value!==f.value) el.value=f.value;
+  try{
+    el.focus({preventScroll:true});
+    if(f.start!=null&&el.setSelectionRange) el.setSelectionRange(f.start,f.end);
+    if(f.scroll) el.scrollTop=f.scroll;
+  }catch(e){}
+}
+function grabScroll(sel){ const el=view.querySelector(sel); return el?{sel:sel,top:el.scrollTop,h:el.scrollHeight}:null; }
+function putScroll(s){ if(!s) return; const el=view.querySelector(s.sel); if(el) el.scrollTop=s.top; }
+
+function toast(msg){
+  const el=document.createElement("div");
+  el.className="toast"; el.textContent=msg;
+  toastLayer.appendChild(el);
+  const h=setTimeout(()=>{ el.remove(); toastHandles=toastHandles.filter(x=>x!==h); },2800);
+  toastHandles.push(h);
+}
+
+/* confirm() can be blocked outright inside a sandboxed frame, so the app
+   ships its own dialog and never calls the native one. */
+function confirmDialog(opts){
+  return new Promise(resolve=>{
+    modalLayer.innerHTML='<div class="modal" role="dialog" aria-modal="true">'+
+      '<h3 class="h-sec">'+esc(opts.title)+'</h3>'+
+      '<p class="sub">'+esc(opts.body||"")+'</p>'+
+      '<div class="row" style="justify-content:flex-end;gap:8px;">'+
+        '<button class="btn ghost" id="md-no">'+esc(opts.cancelLabel||"Cancel")+'</button>'+
+        '<button class="btn '+(opts.danger?"danger":"primary")+'" id="md-yes">'+esc(opts.confirmLabel||"Confirm")+'</button>'+
+      '</div></div>';
+    const done=v=>{ modalLayer.innerHTML=""; resolve(v); };
+    $("md-no").onclick=()=>done(false);
+    $("md-yes").onclick=()=>done(true);
+    modalLayer.onclick=e=>{ if(e.target===modalLayer) done(false); };
+    $("md-yes").focus();
+  });
+}
+function closeMenu(){ menuLayer.innerHTML=""; }
+function openMenu(anchorEl,items){
+  const r=anchorEl.getBoundingClientRect(), W=214, H=Math.min(items.length*38+12,300);
+  let left=clamp(r.right-W,8,Math.max(8,window.innerWidth-W-8));
+  let top=r.bottom+4;
+  if(top+H>window.innerHeight) top=Math.max(8,r.top-H-4);
+  menuLayer.innerHTML='<div class="menu" style="top:'+top+'px;left:'+left+'px;"></div>';
+  const box=menuLayer.firstChild;
+  items.forEach(it=>{
+    const b=document.createElement("button");
+    b.textContent=it.label;
+    if(it.danger) b.className="danger";
+    b.onclick=e=>{ e.stopPropagation(); closeMenu(); it.run(); };
+    box.appendChild(b);
+  });
+  menuLayer.onclick=e=>{ if(e.target===menuLayer) closeMenu(); };
+}
+document.addEventListener("keydown",e=>{
+  if(e.key!=="Escape") return;
+  closeMenu();
+  if(modalLayer.querySelector(".sheet")) closeSheet();
+});
+
+/* ---- friend sheet: tap a person's photo or name ---- */
+let sheetFor=null;
+function closeSheet(){ sheetFor=null; modalLayer.innerHTML=""; modalLayer.onclick=null; }
+function blockPerson(id){
+  return (async()=>{
+    const nm=nameOf(id);
+    const ok=await confirmDialog({title:"Block "+nm+"?",body:"They disappear from your matches and conversations, and neither of you can message the other. You can unblock them any time from your Profile.",confirmLabel:"Block",danger:true});
+    if(!ok) return false;
+    if(S.selected===id) S.selected=null;
+    await act(()=>toggleListEntry("blocks",id));
+    toast(nm+" blocked.");
+    return true;
+  })();
+}
+function openPersonSheet(id){
+  closeMenu();
+  const p=profileOf(id);
+  if(!p){ toast("That profile is no longer here."); return; }
+  sheetFor=id;
+  const has=k=>(S.settings[k]||[]).indexOf(id)>=0;
+  const blocked=has("blocks"), fav=has("favorites"), c=convFor(id);
+  const m=matchInfo(S.profile,p);
+  const strip=m.theyTeach.length||m.iTeach.length
+    ? '<div class="match-strip'+(m.mutual?" mutual":"")+'">'+
+        (m.mutual?"Two-way match":"One-way match")+' · '+
+        esc([m.theyTeach.length?"teaches you "+m.theyTeach.map(x=>langName(x.code)).join(", "):"",
+             m.iTeach.length?"learns "+m.iTeach.map(x=>langName(x.code)).join(", ")+" from you":""].filter(Boolean).join(" · "))+'</div>':"";
+  const row=(key,icon,label,danger)=>'<button data-sh="'+key+'"'+(danger?' class="danger"':"")+'><span style="width:20px;text-align:center;">'+icon+'</span>'+esc(label)+'</button>';
+  modalLayer.innerHTML='<div class="modal sheet" role="dialog" aria-modal="true" aria-label="'+esc(nameOf(id))+'">'+
+    '<div class="sheet-head">'+avatarHtml(id,"l",true)+
+      '<div style="flex:1;min-width:0;"><div class="nm">'+esc(nameOf(id))+(fav?' <span class="fav" title="Favourite">★</span>':"")+'</div>'+
+      '<div class="tz">'+esc(p.timezone?tzNow(p.timezone)+" local · "+p.timezone.replace(/_/g," "):"Timezone not set")+'</div>'+
+      (p.isDemo?'<span class="pill teal" style="margin-top:4px;">demo partner</span>':"")+'</div>'+
+      '<button class="icon-btn" data-sh="close" aria-label="Close">✕</button></div>'+
+    strip+
+    (p.bio?'<p class="sub">'+esc(truncate(p.bio,220))+'</p>':"")+
+    '<div><div class="mini" style="margin-bottom:5px;">Speaks</div>'+langChips(p.speaks,"speak")+'</div>'+
+    '<div><div class="mini" style="margin-bottom:5px;">Learning</div>'+langChips(p.practices,"practice")+'</div>'+
+    (blocked
+      ? '<div class="note">You have blocked '+esc(nameOf(id))+'. Unblock to message or call.</div>'
+      : '<div class="sheet-actions">'+
+          '<button class="sheet-act" data-sh="msg"><span class="ic">💬</span>Message</button>'+
+          '<button class="sheet-act" data-sh="audio"><span class="ic">📞</span>Call</button>'+
+          '<button class="sheet-act" data-sh="video"><span class="ic">🎥</span>Video</button>'+
+        '</div>')+
+    '<div class="sheet-list">'+
+      row("fav",fav?"★":"☆",fav?"Remove from favourites":"Add to favourites")+
+      row("pin","📌",has("pins")?"Unpin chat":"Pin chat to top")+
+      (c?row("mute","🔕",has("mutes")?"Unmute notifications":"Mute notifications"):"")+
+      (c?row("arch","🗄",has("archives")?"Unarchive chat":"Archive chat"):"")+
+      row("block","🚫",blocked?"Unblock "+nameOf(id):"Block "+nameOf(id),!blocked)+
+      row("report","⚑","Report "+nameOf(id),true)+
+    '</div>'+
+  '</div>';
+  modalLayer.onclick=e=>{ if(e.target===modalLayer) closeSheet(); };
+  const reopen=()=>{ if(sheetFor===id) openPersonSheet(id); };
+  const toggle=(key,msgOn,msgOff)=>act(async()=>{
+    const was=has(key);
+    await toggleListEntry(key,id);
+    toast(was?msgOff:msgOn);
+  }).then(reopen);
+  modalLayer.querySelectorAll("[data-sh]").forEach(b=>b.onclick=async()=>{
+    const k=b.dataset.sh;
+    if(k==="close"){ closeSheet(); return; }
+    if(k==="msg"){ closeSheet(); openThreadWith(id); return; }
+    if(k==="audio"||k==="video"){ closeSheet(); startCall(id,k); return; }
+    if(k==="fav") return toggle("favorites","Added to favourites.","Removed from favourites.");
+    if(k==="pin") return toggle("pins","Pinned to the top.","Unpinned.");
+    if(k==="mute") return toggle("mutes","Muted.","Unmuted.");
+    if(k==="arch"){
+      if(!has("archives")&&S.selected===id) S.selected=null;
+      return toggle("archives","Chat archived - find it under Archive.","Moved back to your inbox.");
+    }
+    if(k==="block"){
+      if(blocked){ await act(()=>toggleListEntry("blocks",id)); toast(nameOf(id)+" unblocked."); reopen(); return; }
+      closeSheet(); await blockPerson(id); return;
+    }
+    if(k==="report"){ closeSheet(); reportPerson(id); }
+  });
+}
+
+function personMenuItems(id,opts){
+  const o=opts||{};
+  const nm=nameOf(id);
+  const has=(k)=>(S.settings[k]||[]).indexOf(id)>=0;
+  const items=[];
+  items.push({label:"View profile & options",run:()=>openPersonSheet(id)});
+  items.push({label:has("favorites")?"★ Remove from favourites":"☆ Add to favourites",run:()=>act(()=>toggleListEntry("favorites",id))});
+  if(o.conversation){
+    items.push({label:has("pins")?"Unpin conversation":"Pin conversation",run:()=>act(()=>toggleListEntry("pins",id))});
+    items.push({label:has("mutes")?"Unmute notifications":"Mute notifications",run:()=>act(()=>toggleListEntry("mutes",id))});
+    items.push({label:has("archives")?"Move out of archive":"Archive conversation",run:()=>act(()=>toggleListEntry("archives",id))});
+  }else{
+    items.push({label:has("pins")?"Unpin match":"Pin match",run:()=>act(()=>toggleListEntry("pins",id))});
+  }
+  items.push({label:(has("blocks")?"Unblock ":"Block ")+nm,danger:!has("blocks"),run:async()=>{
+    if(!has("blocks")){ await blockPerson(id); return; }
+    await act(()=>toggleListEntry("blocks",id));
+  }});
+  items.push({label:"Report "+nm,danger:true,run:()=>reportPerson(id)});
+  return items;
+}
+/* Report asks for a reason (so a moderator can triage) and offers to block
+   in the same step - the two usually go together. */
+function reportPerson(id){
+  const nm=nameOf(id);
+  modalLayer.innerHTML='<div class="modal sheet" role="dialog" aria-modal="true">'+
+    '<h3 class="h-sec">Report '+esc(nm)+'</h3>'+
+    '<p class="sub">'+esc(nm)+' won\'t be told who reported them.</p>'+
+    '<div class="field"><label>What happened?</label><div class="reason-list">'+
+      REPORT_REASONS.map((r,i)=>'<label class="q-opt"><input type="radio" name="rp-reason" value="'+i+'"'+(i===0?" checked":"")+'><span>'+esc(r)+'</span></label>').join("")+
+    '</div></div>'+
+    '<div class="field"><label>Details (optional)</label><textarea id="rp-details" maxlength="600" placeholder="Anything that helps us understand - what was said, when."></textarea></div>'+
+    '<label class="checkline"><input type="checkbox" id="rp-block"'+((S.settings.blocks||[]).indexOf(id)>=0?" checked disabled":" checked")+'><span>Also block '+esc(nm)+'</span></label>'+
+    '<div class="row" style="justify-content:flex-end;gap:8px;">'+
+      '<button class="btn ghost" id="rp-cancel">Cancel</button>'+
+      '<button class="btn danger" id="rp-send">Send report</button>'+
+    '</div></div>';
+  modalLayer.onclick=e=>{ if(e.target===modalLayer) modalLayer.innerHTML=""; };
+  $("rp-cancel").onclick=()=>{ modalLayer.innerHTML=""; };
+  $("rp-send").onclick=async()=>{
+    const sel=modalLayer.querySelector('input[name="rp-reason"]:checked');
+    const reason=REPORT_REASONS[sel?+sel.value:0];
+    const details=($("rp-details").value||"").trim().slice(0,600);
+    const alsoBlock=$("rp-block").checked&&(S.settings.blocks||[]).indexOf(id)<0;
+    modalLayer.innerHTML="";
+    try{
+      if(!isDemo(id)){
+        const rid="r_"+Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+        await db.doc("reports/"+rid).set({reporterId:S.uid,reportedId:id,reason:reason,details:details,ts:Date.now(),status:"open"});
+      }
+      if(alsoBlock){ if(S.selected===id) S.selected=null; await toggleListEntry("blocks",id); }
+      toast(isDemo(id)?"Demo only - nothing was filed."+(alsoBlock?" Blocked.":"")
+        :"Report sent"+(alsoBlock?" and "+nm+" blocked":"")+". Thanks for flagging it.");
+    }catch(e){ toast(dbErrorCopy(e)); }
+    render();
+  };
+}
+
+/* Every async handler runs through here: one try/catch at the top of the
+   flow, so a failure anywhere can never leave a button stuck. */
+async function act(fn,btn,busyLabel){
+  let restore=null;
+  if(btn){ restore=btn.textContent; btn.disabled=true; if(busyLabel) btn.textContent=busyLabel; }
+  try{
+    await fn();
+  }catch(e){
+    console.error(e);
+    toast(dbErrorCopy(e));
+  }finally{
+    if(btn){ btn.disabled=false; if(restore!=null) btn.textContent=restore; }
+    render();
+  }
+}
+function dbErrorCopy(e){
+  const c=e&&e.code;
+  if(c==="quota_exceeded") return "This app's database is full. Delete something before adding more.";
+  if(c==="resource_exhausted") return "Too many changes at once - wait a moment and try again.";
+  if(c==="invalid_argument") return "That change was refused. You may only have view access here.";
+  if(c==="revoked") return "Your access to this app changed. Reopen the page.";
+  if(c==="unavailable") return "Could not reach the server. Try again in a moment.";
+  return (e&&e.message)?("Something went wrong: "+e.message):"Something went wrong. Try again.";
+}
+
+/* Scrolls a freshly rendered error into view - an error above the fold
+   reads exactly like a button that did nothing. */
+function revealError(){
+  const el=view.querySelector(".err");
+  if(el&&el.scrollIntoView) el.scrollIntoView({block:"center",behavior:"smooth"});
+}
+
+/* ============================================================
+   6. Asking Claude
+   ============================================================ */
+function sampleUnavailable(){ return !sampleFn; }
+function sampleErrorCopy(e){
+  const c=e&&e.code;
+  if(c==="not_granted"||c==="sampling_disabled"||c==="not_declared") return "Claude is not available for your account here.";
+  if(c==="rate_limited") return "You have hit your Claude usage limit. Try again later.";
+  if(c==="session_expired") return "Your Claude session expired. Sign in again and retry.";
+  if(c==="invalid_json") return "The reply came back malformed. Try again.";
+  if(c==="refused") return "Claude declined that request. Try rephrasing it.";
+  if(c==="cancelled") return "Stopped.";
+  return "Could not reach Claude. Try again.";
+}
+async function askJSON(prompt,tier,maxHint){
+  if(!sampleFn) throw {code:"not_granted",message:"sample unavailable"};
+  return await sampleFn.json(prompt,{modelTier:tier||"default",cache:false});
+}
+async function translateTo(text,targetLang){
+  if(!sampleFn) throw {code:"not_granted",message:"sample unavailable"};
+  const r=await sampleFn(
+    "Translate the text below into "+targetLang+". Reply with only the translation - no quotes, no notes, no preamble.\n\n"+text,
+    {modelTier:"quick"});
+  return r.text.trim();
+}
+function myTargetLanguage(){
+  const p=(S.profile&&S.profile.practices)||[];
+  return p.length?langName(p[0].code):"English";
+}
+
+/* ============================================================
+   7. Shared fragments
+   ============================================================ */
+function avatarHtml(id,size,withPresence){
+  const url=avatarOf(id), nm=nameOf(id);
+  const img='<img class="av '+(size||"m")+'" src="'+esc(url)+'" alt="" referrerpolicy="no-referrer">';
+  if(!withPresence) return img;
+  return '<span class="presence '+(isOnline(id)?"online":"")+'" title="'+(isOnline(id)?"Online now":"Offline")+'">'+img+'<i class="dot"></i></span>';
+}
+/* Photo that opens the friend sheet (favourite, archive, block, report…). */
+function sheetAvatar(id,size){
+  return '<button class="av-btn" data-sheet="'+esc(id)+'" title="View '+esc(nameOf(id))+'" aria-label="View '+esc(nameOf(id))+'">'+avatarHtml(id,size,true)+'</button>';
+}
+function wireSheetTriggers(){
+  document.querySelectorAll("[data-sheet]").forEach(b=>{
+    b.onclick=e=>{ e.stopPropagation(); e.preventDefault(); openPersonSheet(b.dataset.sheet); };
+    b.onkeydown=e=>{ if(e.key==="Enter"||e.key===" ") e.stopPropagation(); };
+  });
+}
+function langChips(entries,kind){
+  const list=normLangs(entries);
+  if(!list.length) return '<span class="sub">None listed</span>';
+  return '<div class="chips">'+list.map(e=>
+    '<span class="langchip '+kind+'">'+esc(langName(e.code))+levelPill(e.level)+'</span>').join("")+'</div>';
+}
+function pageHead(eyebrow,title,sub){
+  return '<div class="stack" style="gap:6px;">'+
+    '<p class="eyebrow">'+esc(eyebrow)+'</p>'+
+    '<h2 class="h-page">'+esc(title)+'</h2>'+
+    (sub?'<p class="sub">'+esc(sub)+'</p>':"")+'</div>';
+}
+function langSelect(id,value,placeholder){
+  return '<select id="'+id+'"><option value="">'+esc(placeholder||"Any language")+'</option>'+
+    LANGS.map(l=>'<option value="'+l[0]+'"'+(value===l[0]?" selected":"")+'>'+esc(l[1])+'</option>').join("")+'</select>';
+}
+function tzSelect(id,value){
+  return '<select id="'+id+'">'+TIMEZONES.map(t=>
+    '<option value="'+esc(t)+'"'+(value===t?" selected":"")+'>'+esc(tzLabel(t))+'</option>').join("")+'</select>';
+}
+/* Language + level editor used by onboarding and the profile tab. */
+function langEditor(list,key){
+  const rows=normLangs(list).map((e,i)=>
+    '<div class="row" data-le-row="'+key+':'+i+'" style="gap:8px;">'+
+      '<div style="flex:1;min-width:0;"><select data-le-code="'+key+':'+i+'">'+
+        LANGS.map(l=>'<option value="'+l[0]+'"'+(e.code===l[0]?" selected":"")+'>'+esc(l[1])+'</option>').join("")+
+      '</select></div>'+
+      '<div style="width:150px;flex:none;"><select data-le-level="'+key+':'+i+'">'+
+        LEVELS.map(lv=>'<option value="'+lv+'"'+(e.level===lv?" selected":"")+'>'+lv+" · "+esc(LEVEL_LABEL[lv])+'</option>').join("")+
+      '</select></div>'+
+      '<button class="icon-btn" data-le-del="'+key+':'+i+'" title="Remove" aria-label="Remove language">✕</button>'+
+    '</div>').join("");
+  return '<div class="stack" style="gap:8px;">'+
+    (rows||'<div class="sub">Nothing added yet.</div>')+
+    '<div><button class="btn ghost sm" data-le-add="'+key+'">+ Add a language</button></div></div>';
+}
+function wireLangEditor(target,rerender){
+  view.querySelectorAll("[data-le-add]").forEach(b=>b.onclick=()=>{
+    const key=b.dataset.leAdd;
+    const used=normLangs(target[key]).map(e=>e.code);
+    const next=(LANGS.find(l=>used.indexOf(l[0])<0)||LANGS[0])[0];
+    target[key]=normLangs(target[key]).concat([{code:next,level:key==="speaks"?"C2":"A2"}]);
+    rerender();
+  });
+  view.querySelectorAll("[data-le-del]").forEach(b=>b.onclick=()=>{
+    const parts=b.dataset.leDel.split(":"), key=parts[0], i=+parts[1];
+    const arr=normLangs(target[key]); arr.splice(i,1); target[key]=arr; rerender();
+  });
+  view.querySelectorAll("[data-le-code]").forEach(sel=>sel.onchange=()=>{
+    const parts=sel.dataset.leCode.split(":"), key=parts[0], i=+parts[1];
+    const arr=normLangs(target[key]); arr[i].code=sel.value; target[key]=arr; rerender();
+  });
+  view.querySelectorAll("[data-le-level]").forEach(sel=>sel.onchange=()=>{
+    const parts=sel.dataset.leLevel.split(":"), key=parts[0], i=+parts[1];
+    const arr=normLangs(target[key]); arr[i].level=sel.value; target[key]=arr; rerender();
+  });
+}
+
+/* ============================================================
+   8. Top bar + tab rail
+   ============================================================ */
+function renderChrome(){
+  const who=$("whoami");
+  if(S.uid&&S.profile){
+    who.innerHTML=avatarHtml(S.uid,"s",false)+'<span class="nm">'+esc(nameOf(S.uid))+'</span>';
+  }else{
+    who.innerHTML="";
+  }
+  const showTabs=!!(S.uid&&S.profile);
+  railWrap.hidden=!showTabs;
+  if(!showTabs){ rail.innerHTML=""; return; }
+  const unread=totalUnread();
+  rail.innerHTML=TABS.map(t=>
+    '<button class="tab-btn'+(S.tab===t[0]?" active":"")+'" data-tab="'+t[0]+'">'+esc(t[1])+
+    (t[0]==="conversations"&&unread>0?'<span class="tab-badge num">'+unread+'</span>':"")+'</button>').join("");
+  rail.querySelectorAll(".tab-btn").forEach(b=>b.onclick=()=>{
+    if(S.tab===b.dataset.tab) return;
+    S.tab=b.dataset.tab; closeMenu();
+    if(S.tab==="profile") S.edit=null;
+    if(S.tab==="become-teacher") S.teacher.dirty=false;
+    window.scrollTo({top:0,behavior:"auto"});
+    render();
+  });
+}
+
+/* ============================================================
+   9. Render dispatcher
+   ============================================================ */
+let renderQueued=false;
+function render(){
+  if(renderQueued) return;
+  renderQueued=true;
+  requestAnimationFrame(()=>{ renderQueued=false; renderNow(); });
+}
+function renderNow(){
+  const focus=grabFocus();
+  const msgScroll=grabScroll(".msgs"), roomScroll=grabScroll(".room-msgs");
+  renderChrome();
+  try{
+    if(!capsSettled){ renderBooting(); }
+    else if(!db||!S.uid){ renderNoPlatform(); }
+    else if(!S.profileLoaded){ renderBooting(); }
+    else if(!S.profile){ renderOnboarding(); }
+    else{
+      const fn={
+        "conversations":renderConversations,"discover":renderDiscover,"test-level":renderTestLevel,
+        "groups":renderGroups,"schedule":renderSchedule,"practice":renderPractice,
+        "profile":renderProfile,"find-teacher":renderFindTeacher,"become-teacher":renderBecomeTeacher
+      }[S.tab]||renderConversations;
+      fn();
+      wireSheetTriggers();
+    }
+  }catch(e){
+    console.error("render failed",e);
+    view.innerHTML='<div class="col"><div class="panel"><h2 class="h-sec">Something broke while drawing this screen</h2>'+
+      '<p class="sub" style="margin-top:8px;">'+esc(e&&e.message||String(e))+'</p></div></div>';
+  }
+  if(S.banner){
+    const b=document.createElement("div");
+    b.className="note warn";
+    b.style.cssText="max-width:760px;margin:0 auto 16px;";
+    b.textContent=S.banner;
+    view.insertBefore(b,view.firstChild);
+  }
+  putFocus(focus);
+  putScroll(msgScroll); putScroll(roomScroll);
+  renderIncomingCall();
+}
+
+function renderBooting(){
+  view.innerHTML='<div class="col"><div class="panel"><div class="thinking"><span class="spin"></span>Loading your exchange…</div></div></div>';
+}
+function renderNoPlatform(){
+  view.innerHTML='<div class="col">'+
+    '<div class="panel stack">'+
+      pageHead("LinguaConnect","This page needs the Claude viewer","LinguaConnect keeps profiles, conversations and calls in the artifact's shared database, and identifies you by your Claude account. Neither is reachable here.")+
+      '<div class="note warn">If you opened a downloaded copy of this file, or a top-level link outside claude.ai, open the artifact itself instead. If you are signed in and still see this, your organisation may not have granted this artifact access to shared data.</div>'+
+    '</div></div>';
+}
+
+/* ============================================================
+   10. Onboarding - no passwords: you are already signed in
+   ============================================================ */
+function renderOnboarding(){
+  if(!S.onboard) S.onboard={email:S.account.email||"",bio:"",timezone:DEFAULT_TZ,speaks:[{code:"en",level:"C2"}],practices:[{code:"es",level:"A2"}]};
+  const d=S.onboard;
+  view.innerHTML='<div class="col">'+
+    '<div class="panel stack">'+
+      pageHead("Set up","Build your exchange profile","You are signed in as "+nameOf(S.uid)+". Tell us which languages you can teach and which you are learning - that pairing is what the matching runs on.")+
+      '<hr class="rule">'+
+      '<div class="field"><label for="ob-email">Email</label>'+
+        '<input type="email" id="ob-email" autocomplete="email" inputmode="email" placeholder="you@example.com" value="'+esc(d.email)+'">'+
+        '<p class="sub" style="margin-top:2px;">Private - only you can see it, never shown on your profile. We\'ll use it to verify your account and send session reminders.</p></div>'+
+      '<div class="field"><label>Languages you speak</label>'+
+        '<p class="sub" style="margin:-2px 0 4px;">Only a language you mark C2 can be offered to a partner - the exchange is built on native-or-equivalent teaching in one direction.</p>'+
+        langEditor(d.speaks,"speaks")+'</div>'+
+      '<div class="field"><label>Languages you are learning</label>'+langEditor(d.practices,"practices")+'</div>'+
+      '<div class="field"><label>Timezone</label>'+tzSelect("ob-tz",d.timezone)+'</div>'+
+      '<div class="field"><label>Short bio</label>'+
+        '<textarea id="ob-bio" placeholder="What do you want to practise, and what are you happy to help with?">'+esc(d.bio)+'</textarea></div>'+
+      (S.onboardErr?'<div class="err">'+esc(S.onboardErr)+'</div>':"")+
+      '<div><button class="btn primary" id="ob-save"'+(S.onboardBusy?" disabled":"")+'>'+(S.onboardBusy?"Creating…":"Create my profile")+'</button></div>'+
+    '</div></div>';
+
+  wireLangEditor(d,()=>render());
+  const tz=$("ob-tz"); if(tz) tz.onchange=()=>{ d.timezone=tz.value; };
+  const bio=$("ob-bio"); if(bio) bio.oninput=()=>{ d.bio=bio.value; };
+  const em=$("ob-email"); if(em) em.oninput=()=>{ d.email=em.value; };
+  const btn=$("ob-save");
+  if(btn) btn.onclick=async()=>{
+    const speaks=normLangs(d.speaks), practices=normLangs(d.practices);
+    S.onboardErr="";
+    if(!String(d.email||"").trim()) S.onboardErr="Add your email - we need it to verify your account.";
+    else if(!EMAIL_RE.test(String(d.email).trim())) S.onboardErr="That email doesn't look right. Check for typos.";
+    else if(!speaks.length) S.onboardErr="Add at least one language you speak.";
+    else if(!speaks.some(e=>e.level==="C2")) S.onboardErr="Mark at least one language C2 - that is the language you can offer a partner.";
+    else if(!practices.length) S.onboardErr="Add at least one language you are learning.";
+    else if(practices.some(p=>speaks.some(s=>s.code===p.code))) S.onboardErr="A language cannot be in both lists. Remove the overlap.";
+    if(S.onboardErr){ render(); setTimeout(revealError,0); return; }
+    S.onboardBusy=true; render();
+    try{
+      /* Keyed by your account id, so a retry updates the same record
+         instead of creating a second profile. */
+      await saveEmail(d.email);
+      await saveProfile({bio:d.bio.slice(0,400),timezone:d.timezone,speaks:speaks,practices:practices,
+        verifiedLevels:{},isTeacher:false,teacherBio:"",teacherRate:"",createdAt:Date.now()});
+      S.onboard=null; S.onboardErr="";
+    }catch(e){
+      S.onboardErr=dbErrorCopy(e);
+      setTimeout(revealError,80);
+    }
+    S.onboardBusy=false; render();
+  };
+}
+
+/* ============================================================
+   11. Conversations
+   ============================================================ */
+function convFor(otherId){
+  if(isDemo(otherId)) return S.demoConvs[otherId]||null;
+  const cid=convId(S.uid,otherId);
+  return S.convs.filter(c=>c.id===cid)[0]||null;
+}
+function buildLists(){
+  const blocks=S.settings.blocks||[], pins=S.settings.pins||[], archives=S.settings.archives||[], favs=S.settings.favorites||[];
+  const others=allProfiles().filter(p=>p.id!==S.uid&&blocks.indexOf(p.id)<0);
+  const convs=[], matches=[], archived=[], favorites=[];
+  others.forEach(p=>{
+    const m=matchInfo(S.profile,p), c=convFor(p.id);
+    if(!c&&m.total===0) return;
+    const entry={p:p,m:m,c:c,pinned:pins.indexOf(p.id)>=0,fav:favs.indexOf(p.id)>=0,
+      muted:(S.settings.mutes||[]).indexOf(p.id)>=0,archived:archives.indexOf(p.id)>=0};
+    if(entry.archived){ archived.push(entry); return; }
+    if(entry.fav) favorites.push(entry);
+    else if(c&&c.lastTs) convs.push(entry);
+    else matches.push(entry);
+  });
+  const rank=(a,b)=>(b.pinned-a.pinned)||((b.c?b.c.lastTs:0)-(a.c?a.c.lastTs:0));
+  convs.sort(rank); archived.sort(rank); favorites.sort(rank);
+  matches.sort((a,b)=>(b.pinned-a.pinned)||(b.m.mutual-a.m.mutual)||(b.m.total-a.m.total));
+  return {favorites:favorites,convs:convs,matches:matches,archived:archived};
+}
+function convRowHtml(e,active){
+  const c=e.c, unread=c?unreadFor(c.id,c):0;
+  const preview=S.demoTyping[e.p.id]?"typing…":c?((c.lastFrom===S.uid?"You: ":"")+c.lastText):
+    (e.m.mutual?"Two-way match · say hello":"One-way match · say hello");
+  return '<div class="conv-row'+(active?" active":"")+'" data-open="'+esc(e.p.id)+'" role="button" tabindex="0">'+
+    sheetAvatar(e.p.id,"s")+
+    '<div class="body">'+
+      '<div class="nm">'+esc(nameOf(e.p.id))+(e.fav?' <span class="fav" title="Favourite">★</span>':"")+(e.pinned?' <span class="mini">pinned</span>':"")+(e.muted?' <span class="mini">muted</span>':"")+'</div>'+
+      '<div class="prev">'+esc(preview)+'</div>'+
+    '</div>'+
+    '<div class="meta">'+
+      (c&&c.lastTs?'<span class="when">'+esc(timeAgo(c.lastTs))+'</span>':"")+
+      (unread&&!e.muted?'<span class="unread-dot num">'+unread+'</span>':"")+
+    '</div>'+
+    '<button class="icon-btn" data-menu="'+esc(e.p.id)+'" data-kind="'+(c?"conv":"match")+'" title="More options" aria-label="More options">⋯</button>'+
+  '</div>';
+}
+function renderConversations(){
+  const L=buildLists();
+  const sel=S.selected;
+  const selEntry=sel?(L.favorites.concat(L.convs,L.matches,L.archived).filter(e=>e.p.id===sel)[0]||null):null;
+  if(sel&&!selEntry) S.selected=null;
+
+  const listHtml=
+    '<div class="panel flush conv-list">'+
+      '<div class="conv-list-head">'+
+        '<span class="eyebrow">'+(S.showArchived?"Archived":"Inbox")+'</span>'+
+        '<button class="btn quiet sm" id="tog-arch">'+(S.showArchived?"Back to inbox":"Archive ("+L.archived.length+")")+'</button>'+
+      '</div>'+
+      '<div class="conv-scroll">'+
+        (S.showArchived
+          ? (L.archived.length?L.archived.map(e=>convRowHtml(e,e.p.id===sel)).join(""):'<div class="empty" style="margin:14px;border:0;">Nothing archived.</div>')
+          : ((L.favorites.length?'<div class="conv-group-label">★ Favourites</div>'+L.favorites.map(e=>convRowHtml(e,e.p.id===sel)).join(""):"")+
+             (L.convs.length?'<div class="conv-group-label">Conversations</div>'+L.convs.map(e=>convRowHtml(e,e.p.id===sel)).join(""):"")+
+             (L.matches.length?'<div class="conv-group-label">New matches</div>'+L.matches.map(e=>convRowHtml(e,e.p.id===sel)).join(""):"")+
+             (!L.favorites.length&&!L.convs.length&&!L.matches.length?'<div class="empty" style="margin:14px;border:0;">No matches yet. Open Discover to see who is here.</div>':"")))+
+      '</div>'+
+    '</div>';
+
+  view.innerHTML='<div class="conv-grid'+(sel?" showing-thread":"")+'">'+listHtml+
+    '<div class="panel flush thread">'+(selEntry?threadHtml(selEntry):threadEmptyHtml())+'</div></div>';
+
+  $("tog-arch").onclick=()=>{ S.showArchived=!S.showArchived; S.selected=null; render(); };
+  view.querySelectorAll("[data-open]").forEach(row=>{
+    const open=async()=>{
+      const id=row.dataset.open;
+      S.selected=id; S.editingIdx=null; S.editDraft=""; S.translations={}; S.translating=null;
+      closeMenu(); render();
+      await act(()=>markRead(convId(S.uid,id)));
+      const box=view.querySelector(".msgs"); if(box) box.scrollTop=box.scrollHeight;
+    };
+    row.onclick=e=>{ if(e.target.closest("[data-menu]")) return; open(); };
+    row.onkeydown=e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); open(); } };
+  });
+  view.querySelectorAll("[data-menu]").forEach(b=>b.onclick=e=>{
+    e.stopPropagation();
+    openMenu(b,personMenuItems(b.dataset.menu,{conversation:b.dataset.kind==="conv"}));
+  });
+  if(selEntry) wireThread(selEntry);
+}
+function threadEmptyHtml(){
+  return '<div class="stack" style="padding:36px 24px;align-items:center;text-align:center;">'+
+    '<p class="eyebrow">Conversations</p>'+
+    '<h2 class="h-sec">Pick someone on the left</h2>'+
+    '<p class="sub" style="max-width:38ch;">Matches are two people whose C2 language is the other\'s target language. Messages, translation and calls all live in the thread.</p>'+
+    '</div>';
+}
+function threadHtml(e){
+  const other=e.p, cid=convId(S.uid,other.id);
+  const msgs=(S.threads[cid]&&S.threads[cid].messages)||[];
+  const blocked=(S.settings.blocks||[]).indexOf(other.id)>=0;
+  let lastDay="";
+  const body=msgs.map((m,i)=>{
+    const mine=m.from===S.uid;
+    const d=dayKey(m.ts);
+    const sep=(d!==lastDay)?'<div class="daysep">'+esc(dayLabel(m.ts))+'</div>':"";
+    lastDay=d;
+    if(S.editingIdx===i&&mine){
+      return sep+'<div class="msg me" style="max-width:min(88%,560px);width:100%;">'+
+        '<textarea id="edit-box" rows="2">'+esc(S.editDraft)+'</textarea>'+
+        '<div class="row" style="gap:6px;margin-top:5px;">'+
+          '<button class="btn primary sm" id="edit-save">Save</button>'+
+          '<button class="btn ghost sm" id="edit-cancel">Cancel</button>'+
+        '</div></div>';
+    }
+    const tr=S.translations[m.id];
+    return sep+'<div class="msg '+(mine?"me":"them")+'">'+
+      '<div class="bubble">'+esc(m.text)+'</div>'+
+      (tr?'<div class="translation">'+esc(tr)+'</div>':"")+
+      '<div class="msg-foot">'+
+        '<span class="num">'+esc(clockTime(m.ts))+'</span>'+
+        (m.edited?'<span>edited</span>':"")+
+        (mine?'<button class="act" data-edit="'+i+'">Edit</button><button class="act" data-del="'+i+'">Delete</button>':"")+
+        (!sampleUnavailable()&&!tr?'<button class="act" data-tr="'+i+'"'+(S.translating===m.id?" disabled":"")+'>'+(S.translating===m.id?"Translating…":"Translate")+'</button>':"")+
+        (tr?'<button class="act" data-untr="'+esc(m.id)+'">Hide translation</button>':"")+
+      '</div></div>';
+  }).join("");
+
+  const teaches=e.m.theyTeach.map(x=>langName(x.code)+" "+x.level).join(", ");
+  const iTeach=e.m.iTeach.map(x=>langName(x.code)+" "+x.level).join(", ");
+  return '<div class="thread-head">'+
+      '<button class="btn quiet sm back-btn" id="thread-back" aria-label="Back to list">←</button>'+
+      sheetAvatar(other.id,"m")+
+      '<div class="body">'+
+        '<button class="name-btn" data-sheet="'+esc(other.id)+'" style="font-family:var(--display);font-weight:700;font-size:15px;">'+esc(nameOf(other.id))+(e.fav?' <span class="fav">★</span>':"")+'</button>'+
+        '<div class="tz">'+esc(other.timezone?tzLabel(other.timezone)+" · "+tzNow(other.timezone)+" local":"Timezone not set")+'</div>'+
+      '</div>'+
+      (blocked?"":
+        '<button class="btn ghost sm" id="call-audio" title="Phone call (audio only)" aria-label="Phone call">📞<span class="lbl"> Call</span></button>'+
+        '<button class="btn primary sm" id="call-video" title="Video call" aria-label="Video call">🎥<span class="lbl"> Video</span></button>')+
+      '<button class="icon-btn" data-menu="'+esc(other.id)+'" data-kind="conv" aria-label="More options">⋯</button>'+
+    '</div>'+
+    '<div class="row wrap" style="padding:9px 16px;border-bottom:1px solid var(--line);gap:8px;">'+
+      (teaches?'<span class="match-strip mutual" style="border:0;padding:4px 9px;">They can teach you '+esc(teaches)+'</span>':"")+
+      (iTeach?'<span class="match-strip" style="padding:4px 9px;">You can teach them '+esc(iTeach)+'</span>':"")+
+      (isDemo(other.id)?'<span style="flex:1;"></span><button class="btn quiet sm" id="demo-ring">Simulate an incoming call</button>':"")+
+    '</div>'+
+    '<div class="msgs">'+(body||'<div class="empty" style="border:0;margin:auto;">No messages yet. Say hello in either language.</div>')+
+      (S.demoTyping[other.id]?'<div class="msg them"><div class="bubble" style="opacity:.7;">typing…</div></div>':"")+'</div>'+
+    (blocked
+      ? '<div class="note" style="margin:14px;">You have blocked this person. Unblock them from the ⋯ menu to message again.</div>'
+      : '<div class="composer">'+
+          '<textarea id="draft" rows="1" placeholder="Message '+esc(nameOf(other.id))+'…">'+esc(S.draft[cid]||"")+'</textarea>'+
+          '<button class="btn primary" id="send">Send</button>'+
+        '</div>');
+}
+function wireThread(e){
+  const other=e.p, cid=convId(S.uid,other.id);
+  const msgs=(S.threads[cid]&&S.threads[cid].messages)||[];
+  const back=$("thread-back"); if(back) back.onclick=()=>{ S.selected=null; render(); };
+  view.querySelectorAll(".thread-head [data-menu]").forEach(b=>b.onclick=ev=>{
+    ev.stopPropagation(); openMenu(b,personMenuItems(b.dataset.menu,{conversation:true}));
+  });
+  const av=$("call-audio"), vd=$("call-video");
+  if(av) av.onclick=()=>startCall(other.id,"audio");
+  if(vd) vd.onclick=()=>startCall(other.id,"video");
+  const dr=$("demo-ring");
+  if(dr) dr.onclick=()=>{
+    toast(demoOf(other.id).first+" will call you in 2 seconds…");
+    setTimeout(()=>{
+      if(C.active) return;
+      S.demoRing={id:"demo",callId:"demo_"+Date.now().toString(36),from:other.id,to:S.uid,
+        mode:(S.demoRingN=(S.demoRingN||0)+1)%2?"video":"audio",status:"ringing",startedAt:Date.now()};
+      render();
+    },2000);
+  };
+
+  const box=$("draft"), send=$("send");
+  if(box){
+    box.oninput=()=>{ S.draft[cid]=box.value; box.style.height="auto"; box.style.height=Math.min(box.scrollHeight,150)+"px"; };
+    box.onkeydown=ev=>{ if(ev.key==="Enter"&&!ev.shiftKey){ ev.preventDefault(); doSend(); } };
+  }
+  async function doSend(){
+    const text=((S.draft[cid]||"")).trim();
+    if(!text) return;
+    S.draft[cid]="";
+    await act(async()=>{
+      await sendMessage(cid,other.id,text);
+      await markRead(cid);
+    },send,"Sending…");
+    const m=view.querySelector(".msgs"); if(m) m.scrollTop=m.scrollHeight;
+  }
+  if(send) send.onclick=doSend;
+
+  view.querySelectorAll("[data-edit]").forEach(b=>b.onclick=()=>{
+    S.editingIdx=+b.dataset.edit; S.editDraft=msgs[S.editingIdx].text; render();
+  });
+  const ec=$("edit-cancel"); if(ec) ec.onclick=()=>{ S.editingIdx=null; S.editDraft=""; render(); };
+  const eb=$("edit-box"); if(eb) eb.oninput=()=>{ S.editDraft=eb.value; };
+  const es=$("edit-save");
+  if(es) es.onclick=()=>act(async()=>{
+    const i=S.editingIdx, t=S.editDraft.trim();
+    if(i==null) return;
+    if(!t){ S.editingIdx=null; return; }
+    const next=msgs.slice();
+    next[i]=Object.assign({},next[i],{text:t,edited:true});
+    S.editingIdx=null; S.editDraft="";
+    await rewriteThread(cid,next,other.id);
+  },es,"Saving…");
+
+  view.querySelectorAll("[data-del]").forEach(b=>b.onclick=async()=>{
+    const i=+b.dataset.del;
+    const ok=await confirmDialog({title:"Delete this message?",body:"It disappears for both of you.",confirmLabel:"Delete",danger:true});
+    if(!ok) return;
+    await act(async()=>{
+      const next=msgs.slice(); next.splice(i,1);
+      await rewriteThread(cid,next,other.id);
+    });
+  });
+  view.querySelectorAll("[data-tr]").forEach(b=>b.onclick=async()=>{
+    const m=msgs[+b.dataset.tr];
+    if(!m) return;
+    S.translating=m.id; render();
+    try{
+      const target=m.from===S.uid?langName((other.practices&&other.practices[0]||{}).code||"en"):myTargetLanguage();
+      S.translations[m.id]=await translateTo(m.text,target);
+    }catch(err){ toast(sampleErrorCopy(err)); }
+    S.translating=null; render();
+  });
+  view.querySelectorAll("[data-untr]").forEach(b=>b.onclick=()=>{
+    delete S.translations[b.dataset.untr]; render();
+  });
+}
+
+/* ============================================================
+   12. Discover
+   ============================================================ */
+function openThreadWith(id){
+  S.selected=id; S.tab="conversations"; S.showArchived=false;
+  S.editingIdx=null; S.editDraft=""; S.translations={};
+  closeMenu(); render();
+  act(()=>markRead(convId(S.uid,id)));
+}
+function personCardHtml(p,m){
+  const strip=m.mutual
+    ? '<div class="match-strip mutual">Two-way match · '+esc(m.theyTeach.map(x=>langName(x.code)).join(", "))+' for '+esc(m.iTeach.map(x=>langName(x.code)).join(", "))+'</div>'
+    : (m.theyTeach.length
+      ? '<div class="match-strip">They can teach you '+esc(m.theyTeach.map(x=>langName(x.code)).join(", "))+'</div>'
+      : (m.iTeach.length?'<div class="match-strip">You can teach them '+esc(m.iTeach.map(x=>langName(x.code)).join(", "))+'</div>':""));
+  return '<article class="person-card">'+
+    '<div class="hd">'+sheetAvatar(p.id,"m")+
+      '<div class="body"><button class="name-btn nm" data-sheet="'+esc(p.id)+'">'+esc(nameOf(p.id))+(isFav(p.id)?' <span class="fav">★</span>':"")+'</button>'+
+      (p.isDemo?' <span class="pill teal">demo</span>':"")+
+      '<div class="tz">'+esc(p.timezone?tzNow(p.timezone)+" local · "+p.timezone.replace(/_/g," "):"Timezone not set")+'</div></div>'+
+      '<button class="icon-btn" data-menu="'+esc(p.id)+'" aria-label="More options">⋯</button>'+
+    '</div>'+
+    (p.bio?'<p class="bio">'+esc(truncate(p.bio,150))+'</p>':"")+
+    strip+
+    '<div><div class="mini" style="margin-bottom:5px;">Speaks</div>'+langChips(p.speaks,"speak")+'</div>'+
+    '<div><div class="mini" style="margin-bottom:5px;">Learning</div>'+langChips(p.practices,"practice")+'</div>'+
+    '<button class="btn primary block" data-msg="'+esc(p.id)+'">Message '+esc(nameOf(p.id).split(" ")[0])+'</button>'+
+  '</article>';
+}
+function renderDiscover(){
+  const f=S.discover, blocks=S.settings.blocks||[];
+  let list=allProfiles().filter(p=>p.id!==S.uid&&blocks.indexOf(p.id)<0);
+  if(f.lang) list=list.filter(p=>normLangs(p.speaks).concat(normLangs(p.practices)).some(e=>e.code===f.lang));
+  if(f.level) list=list.filter(p=>normLangs(p.speaks).some(e=>e.level===f.level));
+  if(f.tz) list=list.filter(p=>p.timezone===f.tz);
+  if(f.q){
+    const q=f.q.toLowerCase();
+    list=list.filter(p=>nameOf(p.id).toLowerCase().indexOf(q)>=0||String(p.bio||"").toLowerCase().indexOf(q)>=0);
+  }
+  const scored=list.map(p=>({p:p,m:matchInfo(S.profile,p)}))
+    .sort((a,b)=>(b.m.mutual-a.m.mutual)||(b.m.total-a.m.total)||nameOf(a.p.id).localeCompare(nameOf(b.p.id)));
+  const mutualCount=scored.filter(x=>x.m.mutual).length;
+
+  view.innerHTML='<div class="stack" style="gap:18px;">'+
+    pageHead("Discover","Everyone on LinguaConnect",
+      scored.length+" "+(scored.length===1?"person":"people")+" · "+mutualCount+" two-way "+(mutualCount===1?"match":"matches")+" with you")+
+    '<div class="panel"><div class="filters">'+
+      '<div class="field"><label>Search</label><input type="text" id="dq" placeholder="Name or bio" value="'+esc(f.q)+'"></div>'+
+      '<div class="field"><label>Language</label>'+langSelect("dlang",f.lang,"Any language")+'</div>'+
+      '<div class="field"><label>Speaks at</label><select id="dlevel"><option value="">Any level</option>'+
+        LEVELS.map(l=>'<option value="'+l+'"'+(f.level===l?" selected":"")+'>'+l+" · "+esc(LEVEL_LABEL[l])+'</option>').join("")+'</select></div>'+
+      '<div class="field"><label>Timezone</label><select id="dtz"><option value="">Anywhere</option>'+
+        TIMEZONES.map(t=>'<option value="'+esc(t)+'"'+(f.tz===t?" selected":"")+'>'+esc(t.replace(/_/g," "))+'</option>').join("")+'</select></div>'+
+    '</div></div>'+
+    adFor(S.profiles.length)+
+    (scored.length?'<div class="cardgrid">'+scored.map(x=>personCardHtml(x.p,x.m)).join("")+'</div>'
+      :'<div class="empty">Nobody matches those filters yet.</div>')+
+  '</div>';
+
+  const q=$("dq"); if(q) q.oninput=()=>{ f.q=q.value; render(); };
+  const dl=$("dlang"); if(dl) dl.onchange=()=>{ f.lang=dl.value; render(); };
+  const dv=$("dlevel"); if(dv) dv.onchange=()=>{ f.level=dv.value; render(); };
+  const dt=$("dtz"); if(dt) dt.onchange=()=>{ f.tz=dt.value; render(); };
+  view.querySelectorAll("[data-msg]").forEach(b=>b.onclick=()=>openThreadWith(b.dataset.msg));
+  view.querySelectorAll("[data-menu]").forEach(b=>b.onclick=e=>{
+    e.stopPropagation(); openMenu(b,personMenuItems(b.dataset.menu,{conversation:!!convFor(b.dataset.menu)}));
+  });
+}
+
+/* ============================================================
+   13. Profile
+   ============================================================ */
+function renderProfile(){
+  const p=S.profile;
+  if(!S.edit) S.edit={bio:p.bio||"",timezone:p.timezone||DEFAULT_TZ,email:S.account.email||"",
+    speaks:normLangs(p.speaks),practices:normLangs(p.practices)};
+  const d=S.edit;
+  const myCerts=S.certs.filter(c=>c.uid===S.uid);
+  const blocked=(S.settings.blocks||[]);
+
+  view.innerHTML='<div class="col">'+
+    pageHead("Profile","Your exchange profile","Everything here is what other members see in Discover and in a thread header.")+
+    '<div class="panel stack">'+
+      '<div class="row">'+avatarHtml(S.uid,"l",false)+
+        '<div><div style="font-family:var(--display);font-weight:800;font-size:18px;">'+esc(nameOf(S.uid))+'</div>'+
+        '<div class="tz">'+esc(tzLabel(p.timezone))+' · '+esc(tzNow(p.timezone))+' your local time</div></div></div>'+
+      '<div class="note">Your name and photo come from your Claude account - LinguaConnect never stores a second copy of them, so they stay right if you change them.</div>'+
+      (myCerts.length?'<div><div class="mini" style="margin-bottom:5px;">Teaching certificates</div><div class="chips">'+
+        myCerts.map(c=>'<span class="cert-badge">'+esc(langName(c.code))+' · '+esc(c.certType)+'</span>').join("")+'</div></div>':"")+
+    '</div>'+
+    '<div class="panel stack">'+
+      '<h3 class="h-sec">Edit</h3>'+
+      (!S.account.email?'<div class="note warn">Add your email so we can verify your account.</div>':"")+
+      '<div class="field"><label for="pf-email">Email <span class="pill '+(S.account.emailVerified?"ok":"warn")+'" style="margin-left:4px;">'+
+        (S.account.email?(S.account.emailVerified?"verified":"not verified yet"):"missing")+'</span></label>'+
+        '<input type="email" id="pf-email" autocomplete="email" inputmode="email" placeholder="you@example.com" value="'+esc(d.email)+'">'+
+        '<p class="sub" style="margin-top:2px;">Private to you. Not shown on your profile.</p></div>'+
+      '<div class="field"><label>Languages you speak</label>'+langEditor(d.speaks,"speaks")+'</div>'+
+      '<div class="field"><label>Languages you are learning</label>'+langEditor(d.practices,"practices")+'</div>'+
+      '<div class="field"><label>Timezone</label>'+tzSelect("pf-tz",d.timezone)+'</div>'+
+      '<div class="field"><label>Bio</label><textarea id="pf-bio" placeholder="What are you working on?">'+esc(d.bio)+'</textarea></div>'+
+      (S.editErr?'<div class="err">'+esc(S.editErr)+'</div>':"")+
+      '<div class="row"><button class="btn primary" id="pf-save"'+(S.editBusy?" disabled":"")+'>'+(S.editBusy?"Saving…":"Save changes")+'</button>'+
+      '<button class="btn quiet" id="pf-reset">Discard</button></div>'+
+    '</div>'+
+    '<div class="panel stack">'+
+      '<h3 class="h-sec">Blocked people ('+blocked.length+')</h3>'+
+      (blocked.length?'<div class="panel flush" style="box-shadow:none;">'+blocked.map(id=>
+        '<div class="list-row">'+avatarHtml(id,"s",false)+'<div class="body" style="font-weight:600;">'+esc(nameOf(id))+'</div>'+
+        '<button class="btn ghost sm" data-unblock="'+esc(id)+'">Unblock</button></div>').join("")+'</div>'
+        :'<p class="sub">Nobody. Block someone from their profile sheet - tap their photo anywhere in the app.</p>')+
+    '</div>'+
+    '<div class="panel stack">'+
+      '<h3 class="h-sec">Danger zone</h3>'+
+      '<p class="sub">Removing your profile hides you from Discover and matching. Your messages stay in the threads you were part of.</p>'+
+      '<div><button class="btn danger" id="pf-delete">Remove my profile</button></div>'+
+    '</div>'+
+    (S.me&&S.me.isOwner?ownerPanelHtml():"")+
+  '</div>';
+
+  wireLangEditor(d,()=>render());
+  const tz=$("pf-tz"); if(tz) tz.onchange=()=>{ d.timezone=tz.value; };
+  const bio=$("pf-bio"); if(bio) bio.oninput=()=>{ d.bio=bio.value; };
+  const em=$("pf-email"); if(em) em.oninput=()=>{ d.email=em.value; };
+  view.querySelectorAll("[data-unblock]").forEach(b=>b.onclick=()=>act(async()=>{
+    await toggleListEntry("blocks",b.dataset.unblock);
+    toast(nameOf(b.dataset.unblock)+" unblocked.");
+  },b,"…"));
+  $("pf-reset").onclick=()=>{ S.edit=null; S.editErr=""; render(); };
+  const save=$("pf-save");
+  save.onclick=async()=>{
+    const speaks=normLangs(d.speaks), practices=normLangs(d.practices);
+    const email=String(d.email||"").trim();
+    S.editErr="";
+    if(email&&!EMAIL_RE.test(email)) S.editErr="That email doesn't look right. Check for typos.";
+    else if(!email&&S.account.email) S.editErr="Keep an email on file - it's how we'll verify your account.";
+    else if(!speaks.length) S.editErr="Keep at least one language you speak.";
+    else if(!speaks.some(e=>e.level==="C2")) S.editErr="Keep at least one language at C2 - without it nobody can match with you.";
+    else if(!practices.length) S.editErr="Add at least one language you are learning.";
+    else if(practices.some(x=>speaks.some(s=>s.code===x.code))) S.editErr="A language cannot be in both lists.";
+    if(S.editErr){ render(); setTimeout(revealError,0); return; }
+    S.editBusy=true; render();
+    try{
+      if(email.toLowerCase()!==(S.account.email||"")) await saveEmail(email);
+      await saveProfile({bio:d.bio.slice(0,400),timezone:d.timezone,speaks:speaks,practices:practices});
+      S.edit=null; toast("Profile saved.");
+    }catch(e){ S.editErr=dbErrorCopy(e); setTimeout(revealError,80); }
+    S.editBusy=false; render();
+  };
+  $("pf-delete").onclick=async()=>{
+    const ok=await confirmDialog({title:"Remove your profile?",body:"You disappear from Discover and from everyone's matches. You can build a new profile afterwards.",confirmLabel:"Remove",danger:true});
+    if(!ok) return;
+    await act(async()=>{
+      await db.doc("profiles/"+S.uid).delete();
+      S.profile=null; S.edit=null; S.onboard=null;
+    });
+  };
+  if(S.me&&S.me.isOwner) wireOwnerPanel();
+}
+function ownerPanelHtml(){
+  const open=S.reports.filter(r=>r.status!=="closed");
+  return '<div class="panel stack">'+
+    '<h3 class="h-sec">Trust &amp; safety queue</h3>'+
+    '<p class="sub">Visible to you as the owner of this artifact. In the prototype these records sit in the shared database, so treat them as visible to anyone who can open the app - a production build would put them behind a staff-only service.</p>'+
+    (open.length?'<div class="panel flush" style="box-shadow:none;">'+open.map(r=>
+      '<div class="list-row"><div class="body"><div style="font-weight:600;">'+esc(nameOf(r.reportedId))+'</div>'+
+      (r.reason?'<span class="pill warn">'+esc(r.reason)+'</span>':"")+
+      (r.details?'<div class="sub" style="margin-top:4px;">“'+esc(r.details)+'”</div>':"")+
+      '<div class="sub">Reported by '+esc(nameOf(r.reporterId))+' · '+esc(new Date(r.ts).toLocaleString())+'</div></div>'+
+      '<button class="btn ghost sm" data-close-report="'+esc(r.id)+'">Mark handled</button></div>').join("")+'</div>'
+      :'<div class="empty">No open reports.</div>')+
+  '</div>';
+}
+function wireOwnerPanel(){
+  view.querySelectorAll("[data-close-report]").forEach(b=>b.onclick=()=>act(()=>
+    db.doc("reports/"+b.dataset.closeReport).update({status:"closed"})));
+}
+
+/* ============================================================
+   14. Quiz Yourself - pick a CEFR level, take a short grammar +
+       vocabulary quiz, get it marked, keep a history of scores
+   ============================================================ */
+const QUIZ_PASS=80;
+function freshQuiz(keep){
+  const k=keep||{};
+  return {status:"idle",lang:k.lang||"",level:k.level||"",qs:[],answers:{},err:"",
+    view:k.view||"take",onlyMistakes:false,score:null};
+}
+function letterGrade(pct){
+  return pct>=90?"A":pct>=80?"B":pct>=70?"C":pct>=60?"D":"F";
+}
+function gradeTone(pct){ return pct>=80?"ok":pct>=60?"warn":"tier-c"; }
+function nextLevel(lv){ const i=LEVELS.indexOf(lv); return i>=0&&i<LEVELS.length-1?LEVELS[i+1]:null; }
+function prevLevel(lv){ const i=LEVELS.indexOf(lv); return i>0?LEVELS[i-1]:null; }
+function quizAdvice(pct,lv){
+  const up=nextLevel(lv), down=prevLevel(lv);
+  if(pct>=90) return up?"Excellent - "+lv+" is comfortable for you. Try "+up+" next.":"Excellent - you've aced the top level.";
+  if(pct>=QUIZ_PASS) return up?"Passed! You're ready to have a go at "+up+".":"Passed the top level. Impressive.";
+  if(pct>=60) return "Nearly there. Go through the corrections below, then retake "+lv+".";
+  return down?lv+" is a stretch for now. Build up with "+down+" first, then come back.":"Keep going - read the corrections below and retake it.";
+}
+function quizHistory(){ return (S.settings.quizHistory||[]).slice().sort((a,b)=>b.ts-a.ts); }
+
+/* Right / wrong is worked out here from the stored answer key, never taken
+   from the model; the model only supplies the explanation for each item. */
+function reviewItems(t){
+  return t.qs.map((q,i)=>{
+    const key=Number(q.answerIndex), pick=t.answers[i];
+    const state=(pick==null)?"skip":(pick===key?"right":"wrong");
+    return {i:i,q:q,state:state,pick:pick,key:key,comment:String(q.explanation||"")};
+  });
+}
+function reviewCardHtml(x){
+  const opts=x.q.options||[];
+  const tag={right:"✓ Correct",wrong:"✗ Mistake",skip:"— Left blank"}[x.state];
+  let inner='<div class="row" style="justify-content:space-between;gap:8px;"><span class="mini">Question '+(x.i+1)+
+      (x.q.section?' · '+esc(x.q.section):"")+'</span>'+
+    '<span class="pill '+({right:"ok",wrong:"tier-c",skip:"warn"}[x.state])+'">'+tag+'</span></div>'+
+    '<div style="font-size:14.5px;">'+esc(x.q.prompt)+'</div>';
+  if(x.state!=="right") inner+='<div class="ans'+(x.state==="wrong"?" bad":"")+'"><b>You chose</b><span>'+esc(x.pick==null?"(no answer)":opts[x.pick])+'</span></div>';
+  inner+='<div class="ans good"><b>'+(x.state==="right"?"Your answer":"Correct")+'</b><span>'+esc(opts[x.key]!=null?opts[x.key]:"—")+'</span></div>';
+  if(x.comment) inner+='<div class="comment">'+esc(x.comment)+'</div>';
+  return '<div class="rv '+x.state+'">'+inner+'</div>';
+}
+function cap(s){ s=String(s||""); return s.charAt(0).toUpperCase()+s.slice(1); }
+function quizQuestionsHtml(t){
+  let lastSection="";
+  return t.qs.map((q,i)=>{
+    const sec=q.section||"";
+    const head=(sec&&sec!==lastSection)?'<h3 class="h-sec quiz-sec">'+esc(cap(sec))+'</h3>':"";
+    lastSection=sec;
+    return head+'<div class="q-card">'+
+      '<div class="mini">Question '+(i+1)+' of '+t.qs.length+'</div>'+
+      '<div style="font-size:14.5px;">'+esc(q.prompt)+'</div>'+
+      '<div class="q-opts">'+(q.options||[]).map((o,oi)=>
+        '<label class="q-opt"><input type="radio" name="tq'+i+'" value="'+oi+'"'+(t.answers[i]===oi?" checked":"")+'><span>'+esc(o)+'</span></label>').join("")+'</div>'+
+    '</div>';
+  }).join("");
+}
+function quizResultHtml(t){
+  const sc=t.score, rv=reviewItems(t);
+  const shown=t.onlyMistakes?rv.filter(x=>x.state!=="right"):rv;
+  const secs=Object.keys(sc.sections);
+  return '<div class="grade-card">'+
+      '<div class="grade-letter g-'+sc.grade.toLowerCase()+'" aria-label="Grade '+esc(sc.grade)+'">'+esc(sc.grade)+'</div>'+
+      '<div class="stack" style="gap:4px;flex:1;min-width:0;">'+
+        '<div class="grade-pct num">'+sc.pct+'%</div>'+
+        '<div class="mini">'+esc(langName(t.lang))+' · '+esc(t.level)+' '+esc(LEVEL_LABEL[t.level])+' · '+sc.correct+' of '+sc.total+' correct</div>'+
+        '<div class="chips" style="margin-top:4px;">'+secs.map(k=>
+          '<span class="pill '+gradeTone(Math.round(100*sc.sections[k].c/sc.sections[k].n))+' num">'+esc(cap(k))+' '+sc.sections[k].c+'/'+sc.sections[k].n+'</span>').join("")+
+          (sc.pct>=QUIZ_PASS?'<span class="pill ok">✓ '+esc(t.level)+' passed</span>':"")+'</div>'+
+      '</div>'+
+    '</div>'+
+    '<div class="feedback" style="background:var(--surface-2);">'+esc(quizAdvice(sc.pct,t.level))+'</div>'+
+    '<div class="row wrap" style="gap:8px;">'+
+      '<button class="btn primary" id="q-retake">Retake '+esc(t.level)+' (new questions)</button>'+
+      (sc.pct>=QUIZ_PASS&&nextLevel(t.level)?'<button class="btn ghost" id="q-up">Try '+esc(nextLevel(t.level))+'</button>':"")+
+      '<button class="btn quiet" id="q-choose">Choose another level</button>'+
+    '</div>'+
+    '<hr class="rule">'+
+    '<div class="score-strip"><h3 class="h-sec" style="flex:1;">Corrections</h3>'+
+      '<span class="pill '+(sc.correct===sc.total?"ok":"warn")+' num">'+(sc.total-sc.correct)+' to review</span></div>'+
+    '<label class="checkline"><input type="checkbox" id="t-only"'+(t.onlyMistakes?" checked":"")+'><span>Only show my mistakes</span></label>'+
+    (shown.length?shown.map(reviewCardHtml).join(""):'<div class="empty">No mistakes - a perfect score.</div>');
+}
+function quizHistoryHtml(){
+  const hist=quizHistory();
+  if(!hist.length) return '<div class="empty">No quizzes yet. Take one and your score lands here.</div>';
+  const avg=Math.round(hist.reduce((s,h)=>s+h.pct,0)/hist.length);
+  const langs=[]; hist.forEach(h=>{ if(langs.indexOf(h.lang)<0) langs.push(h.lang); });
+  const best=(lang,lv)=>hist.filter(h=>h.lang===lang&&h.level===lv).reduce((m,h)=>Math.max(m,h.pct),-1);
+  return '<div class="stat-row">'+
+      '<div class="stat"><div class="n num">'+hist.length+'</div><div class="mini">quizzes taken</div></div>'+
+      '<div class="stat"><div class="n num">'+avg+'%</div><div class="mini">average score</div></div>'+
+      '<div class="stat"><div class="n num">'+hist[0].pct+'%</div><div class="mini">last score</div></div>'+
+    '</div>'+
+    langs.map(lang=>'<div class="stack" style="gap:8px;"><div class="mini">Best score by level · '+esc(langName(lang))+'</div>'+
+      '<div class="lvl-best">'+LEVELS.map(lv=>{
+        const b=best(lang,lv);
+        return '<div class="lb'+(b>=QUIZ_PASS?" pass":b>=0?" tried":"")+'"><div class="lv">'+lv+'</div><div class="pc num">'+(b>=0?b+"%":"—")+'</div></div>';
+      }).join("")+'</div></div>').join("")+
+    '<div class="panel flush" style="box-shadow:none;">'+hist.map(h=>
+      '<div class="list-row">'+
+        '<div class="grade-chip g-'+esc(String(h.grade).toLowerCase())+'">'+esc(h.grade)+'</div>'+
+        '<div class="body">'+
+          '<div class="row" style="gap:7px;"><span style="font-weight:600;">'+esc(langName(h.lang))+'</span>'+levelPill(h.level)+'</div>'+
+          '<div class="bar"><i style="width:'+Math.max(2,h.pct)+'%;" class="'+gradeTone(h.pct)+'"></i></div>'+
+          '<div class="tz">'+esc(new Date(h.ts).toLocaleDateString(undefined,{month:"short",day:"numeric",year:"numeric"}))+' · '+h.correct+'/'+h.total+' correct</div>'+
+        '</div>'+
+        '<div class="hist-pct num">'+h.pct+'%</div>'+
+      '</div>').join("")+'</div>'+
+    '<div><button class="btn quiet sm" id="q-clear">Clear history</button></div>';
+}
+
+function renderTestLevel(){
+  const p=S.profile, t=S.test;
+  const codes=[];
+  normLangs(p.practices).concat(normLangs(p.speaks)).forEach(e=>{ if(codes.indexOf(e.code)<0) codes.push(e.code); });
+  if(!t.lang) t.lang=codes[0]||"";
+  if(!t.level){
+    const mine=normLangs(p.practices).concat(normLangs(p.speaks)).filter(e=>e.code===t.lang)[0];
+    t.level=(mine&&mine.level)||"A2";
+  }
+  const histN=(S.settings.quizHistory||[]).length;
+  let body="";
+
+  if(t.view==="history"){
+    body=quizHistoryHtml();
+  }else if(sampleUnavailable()){
+    body='<div class="note warn">Quizzes are written by Claude, which is not available in this view. Your past scores are still under Past scores.</div>';
+  }else if(t.status==="idle"||t.status==="error"){
+    body='<div class="field"><label>Language</label><select id="q-lang">'+
+        codes.map(c=>'<option value="'+c+'"'+(t.lang===c?" selected":"")+'>'+esc(langName(c))+'</option>').join("")+'</select></div>'+
+      '<div class="field"><label>Pick your level</label><div class="lvl-grid">'+LEVELS.map(lv=>
+        '<button class="lvl-btn'+(t.level===lv?" on":"")+'" data-lvl="'+lv+'" aria-pressed="'+(t.level===lv)+'">'+
+          '<span class="pill tier-'+tierOf(lv)+'">'+lv+'</span><span class="lvl-name">'+esc(LEVEL_LABEL[lv])+'</span></button>').join("")+'</div></div>'+
+      '<p class="sub">10 questions: 5 grammar, then 5 vocabulary, all at '+esc(t.level)+'. Score '+QUIZ_PASS+'% or more to pass the level.</p>'+
+      (t.err?'<div class="err">'+esc(t.err)+'</div>':"")+
+      '<div><button class="btn primary" id="q-start">Start '+esc(t.level)+' quiz</button></div>';
+  }else if(t.status==="generating"){
+    body='<div class="thinking"><span class="spin"></span>Writing your '+esc(langName(t.lang))+' '+esc(t.level)+' quiz… about 20 seconds.</div>';
+  }else if(t.status==="running"){
+    const answered=Object.keys(t.answers).length;
+    body='<div class="row" style="justify-content:space-between;"><span class="pill tier-'+tierOf(t.level)+'">'+esc(langName(t.lang))+' · '+esc(t.level)+'</span>'+
+        '<span class="mini num" id="q-progress">'+answered+' / '+t.qs.length+' answered</span></div>'+
+      quizQuestionsHtml(t)+
+      '<div class="row"><button class="btn primary" id="t-submit">Finish &amp; grade</button>'+
+      '<button class="btn quiet" id="t-abandon">Quit quiz</button></div>';
+  }else if(t.status==="done"&&t.score){
+    body=quizResultHtml(t);
+  }
+
+  view.innerHTML='<div class="col">'+
+    pageHead("Quiz Yourself","Grammar & vocabulary quiz",
+      "Choose a level from A1 to C2 and take a short quiz. It's marked at the end with every correction explained, and each score is saved to your history.")+
+    '<div class="seg" role="tablist">'+
+      '<button role="tab" aria-selected="'+(t.view!=="history")+'" class="'+(t.view!=="history"?"on":"")+'" data-qview="take">'+(t.status==="running"?"Quiz in progress":"Take a quiz")+'</button>'+
+      '<button role="tab" aria-selected="'+(t.view==="history")+'" class="'+(t.view==="history"?"on":"")+'" data-qview="history">Past scores'+(histN?' <span class="num">('+histN+')</span>':"")+'</button>'+
+    '</div>'+
+    '<div class="panel stack">'+body+'</div></div>';
+
+  view.querySelectorAll("[data-qview]").forEach(b=>b.onclick=()=>{ t.view=b.dataset.qview; render(); });
+  const ql=$("q-lang");
+  if(ql) ql.onchange=()=>{ t.lang=ql.value; t.level=""; t.err=""; render(); };
+  view.querySelectorAll("[data-lvl]").forEach(b=>b.onclick=()=>{ t.level=b.dataset.lvl; t.err=""; render(); });
+
+  const startQuiz=async()=>{
+    if(!t.lang){ t.err="Add a language to your profile first."; render(); return; }
+    t.err=""; t.status="generating"; t.answers={}; t.score=null; t.onlyMistakes=false; t.view="take"; render();
+    window.scrollTo({top:0,behavior:"auto"});
+    try{
+      const name=langName(t.lang), lv=t.level;
+      const out=await askJSON(
+        "Write a short multiple-choice quiz testing "+name+" at CEFR level "+lv+" ("+LEVEL_LABEL[lv]+"). "+
+        "Exactly 10 questions: first 5 GRAMMAR (verb forms and tenses, agreement, articles, prepositions, pronouns, word order - whatever is typical for "+lv+"), "+
+        "then 5 VOCABULARY (word meaning, choosing the right word in context, collocations, opposites, everyday phrases). "+
+        "Every question must be pitched at "+lv+" - not easier, not harder. Each has exactly 4 options with exactly one correct answer, and the wrong options should be plausible learner mistakes. "+
+        "Write the instruction part of each prompt in English, with the tested sentence or word in "+name+". "+
+        "For each question add an explanation: 1-2 sentences in English saying why the answer is right and what the common trap is. "+
+        'Reply with only JSON: {"questions":[{"section":"grammar","prompt":"...","options":["...","...","...","..."],"answerIndex":0,"explanation":"..."}]}',
+        "default");
+      const qs=((out&&out.questions)||[]).filter(q=>q&&q.prompt&&Array.isArray(q.options)&&q.options.length>=2&&
+        Number(q.answerIndex)>=0&&Number(q.answerIndex)<q.options.length);
+      if(qs.length<5) throw {code:"invalid_json",message:"malformed"};
+      /* Shuffle each option list so the right answer is not always the first. */
+      t.qs=qs.slice(0,12).map(q=>{
+        const key=q.options[Number(q.answerIndex)];
+        const opts=q.options.slice();
+        for(let k=opts.length-1;k>0;k--){ const j=Math.floor(Math.random()*(k+1)); const tmp=opts[k]; opts[k]=opts[j]; opts[j]=tmp; }
+        const sec=String(q.section||"").toLowerCase();
+        return {section:sec.indexOf("vocab")===0?"vocabulary":sec.indexOf("gram")===0?"grammar":sec,
+          prompt:String(q.prompt),options:opts,answerIndex:opts.indexOf(key),explanation:String(q.explanation||"")};
+      });
+      t.status="running";
+    }catch(e){ t.status="error"; t.err=sampleErrorCopy(e); setTimeout(revealError,80); }
+    render();
+  };
+  const st=$("q-start"); if(st) st.onclick=startQuiz;
+
+  view.querySelectorAll('input[type=radio][name^="tq"]').forEach(r=>r.onchange=()=>{
+    t.answers[+r.name.slice(2)]=+r.value;
+    const pr=$("q-progress"); if(pr) pr.textContent=Object.keys(t.answers).length+" / "+t.qs.length+" answered";
+  });
+  const ab=$("t-abandon");
+  if(ab) ab.onclick=async()=>{
+    const ok=await confirmDialog({title:"Quit this quiz?",body:"Your answers so far won't be saved.",confirmLabel:"Quit",danger:true});
+    if(!ok) return;
+    S.test=freshQuiz({lang:t.lang,level:t.level}); render();
+  };
+  const sub=$("t-submit");
+  if(sub) sub.onclick=async()=>{
+    const blank=t.qs.length-Object.keys(t.answers).length;
+    if(blank>0){
+      const ok=await confirmDialog({title:blank+" question"+(blank===1?"":"s")+" left blank",
+        body:"Blank answers count as wrong. Grade the quiz anyway?",confirmLabel:"Grade it",cancelLabel:"Keep going"});
+      if(!ok) return;
+    }
+    const rv=reviewItems(t), sections={};
+    rv.forEach(x=>{ const k=x.q.section||"questions"; sections[k]=sections[k]||{c:0,n:0}; sections[k].n++; if(x.state==="right") sections[k].c++; });
+    const correct=rv.filter(x=>x.state==="right").length, total=rv.length;
+    const pct=Math.round(100*correct/total);
+    t.score={correct:correct,total:total,pct:pct,grade:letterGrade(pct),sections:sections};
+    t.status="done";
+    window.scrollTo({top:0,behavior:"auto"});
+    render();
+    await act(async()=>{
+      const entry={id:"q_"+Date.now().toString(36),ts:Date.now(),lang:t.lang,level:t.level,
+        pct:pct,correct:correct,total:total,grade:t.score.grade};
+      /* Quiz scores are private practice only - they never touch the public
+         profile or teacher status. Teaching needs an uploaded certificate. */
+      await saveSettings({quizHistory:(S.settings.quizHistory||[]).concat([entry]).slice(-100)});
+    });
+  };
+  const only=$("t-only"); if(only) only.onchange=()=>{ t.onlyMistakes=only.checked; render(); };
+  const rt=$("q-retake"); if(rt) rt.onclick=startQuiz;
+  const up=$("q-up"); if(up) up.onclick=()=>{ t.level=nextLevel(t.level)||t.level; startQuiz(); };
+  const ch=$("q-choose"); if(ch) ch.onclick=()=>{ S.test=freshQuiz({lang:t.lang,level:t.level}); render(); window.scrollTo({top:0}); };
+  const cl=$("q-clear");
+  if(cl) cl.onclick=async()=>{
+    const ok=await confirmDialog({title:"Clear all past scores?",body:"This removes your whole quiz history. It can't be undone.",confirmLabel:"Clear",danger:true});
+    if(!ok) return;
+    await act(()=>saveSettings({quizHistory:[]}));
+  };
+}
+
+/* ============================================================
+   15. Groups
+   ============================================================ */
+function renderGroups(){
+  const g=S.groups;
+  const room=g.activeId?S.rooms.filter(r=>r.id===g.activeId)[0]:null;
+  if(g.activeId&&!room) g.activeId=null;
+
+  if(room){
+    const log=(S.roomLog[room.id]&&S.roomLog[room.id].messages)||[];
+    const joined=(room.members||[]).indexOf(S.uid)>=0;
+    view.innerHTML='<div class="col">'+
+      '<div class="row"><button class="btn quiet sm" id="g-back">← All rooms</button></div>'+
+      '<div class="panel flush">'+
+        '<div class="thread-head"><div class="body">'+
+          '<div style="font-family:var(--display);font-weight:700;font-size:16px;">'+esc(room.name)+'</div>'+
+          '<div class="tz">'+(room.members||[]).length+' member'+((room.members||[]).length===1?"":"s")+' · '+esc(room.lang?langName(room.lang):"Any language")+'</div>'+
+        '</div>'+
+        (joined?'<button class="btn ghost sm" id="g-leave">Leave</button>':'<button class="btn primary sm" id="g-join">Join</button>')+
+        '</div>'+
+        '<div class="room-msgs">'+(log.length?log.map(m=>
+          '<div class="room-msg"><div class="who">'+esc(nameOf(m.from))+' <span class="mini" style="font-weight:400;">'+esc(clockTime(m.ts))+'</span></div>'+
+          '<div class="txt">'+esc(m.text)+'</div></div>').join("")
+          :'<div class="empty" style="border:0;margin:auto;">Nothing said yet. Open with a question in your target language.</div>')+'</div>'+
+        (joined?'<div class="composer"><textarea id="g-draft" rows="1" placeholder="Message the room…">'+esc(g.draft)+'</textarea>'+
+          '<button class="btn primary" id="g-send">Send</button></div>'
+          :'<div class="note" style="margin:14px;">Join the room to post.</div>')+
+      '</div></div>';
+
+    $("g-back").onclick=()=>{ g.activeId=null; render(); };
+    const jb=$("g-join");
+    if(jb) jb.onclick=()=>act(async()=>{
+      const members=(room.members||[]).concat([S.uid]);
+      await qWrite("rooms/"+room.id,()=>db.doc("rooms/"+room.id).update({members:members}));
+    },jb,"Joining…");
+    const lb=$("g-leave");
+    if(lb) lb.onclick=()=>act(async()=>{
+      const members=(room.members||[]).filter(x=>x!==S.uid);
+      await qWrite("rooms/"+room.id,()=>db.doc("rooms/"+room.id).update({members:members}));
+    },lb,"Leaving…");
+    const box=$("g-draft");
+    if(box){
+      box.oninput=()=>{ g.draft=box.value; };
+      box.onkeydown=e=>{ if(e.key==="Enter"&&!e.shiftKey){ e.preventDefault(); sendRoom(); } };
+    }
+    const sb=$("g-send"); if(sb) sb.onclick=sendRoom;
+    function sendRoom(){
+      const text=g.draft.trim(); if(!text) return;
+      g.draft="";
+      act(async()=>{
+        const msgs=log.concat([{from:S.uid,text:text,ts:Date.now()}]).slice(-MAX_MSGS);
+        S.roomLog[room.id]={messages:msgs};
+        await qWrite("roomchats/"+room.id,()=>db.doc("roomchats/"+room.id).set({messages:msgs,updatedAt:Date.now()}));
+      },sb,"Sending…");
+    }
+    const rm=view.querySelector(".room-msgs"); if(rm) rm.scrollTop=rm.scrollHeight;
+    return;
+  }
+
+  view.innerHTML='<div class="col">'+
+    pageHead("Groups","Practice rooms","Open rooms anyone here can join - useful when you want more than one voice, or a language nobody has matched you on yet.")+
+    '<div class="panel stack">'+
+      '<h3 class="h-sec">Start a room</h3>'+
+      '<div class="field"><label>Room name</label><input type="text" id="g-name" maxlength="60" placeholder="e.g. Spanish small talk, Tuesdays" value="'+esc(g.newName)+'"></div>'+
+      '<div class="field"><label>Language (optional)</label>'+langSelect("g-lang",g.lang||"","Any language")+'</div>'+
+      (g.err?'<div class="err">'+esc(g.err)+'</div>':"")+
+      '<div><button class="btn primary" id="g-create">Create room</button></div>'+
+    '</div>'+
+    '<div class="stack" style="gap:10px;">'+
+      '<h3 class="h-sec">Open rooms ('+S.rooms.length+')</h3>'+
+      (S.rooms.length?'<div class="panel flush">'+S.rooms.map(r=>
+        '<div class="list-row"><div class="body">'+
+          '<div style="font-weight:600;">'+esc(r.name)+'</div>'+
+          '<div class="sub">'+(r.members||[]).length+' member'+((r.members||[]).length===1?"":"s")+
+          ' · started by '+esc(nameOf(r.createdBy))+(r.lang?" · "+esc(langName(r.lang)):"")+'</div>'+
+        '</div>'+
+        ((r.members||[]).indexOf(S.uid)>=0?'<span class="pill teal">joined</span>':"")+
+        '<button class="btn ghost sm" data-open-room="'+esc(r.id)+'">Open</button>'+
+        (r.createdBy===S.uid?'<button class="icon-btn" data-del-room="'+esc(r.id)+'" aria-label="Delete room">✕</button>':"")+
+        '</div>').join("")+'</div>'
+        :'<div class="empty">No rooms yet. Start the first one.</div>')+
+    '</div></div>';
+
+  const nm=$("g-name"); if(nm) nm.oninput=()=>{ g.newName=nm.value; };
+  const gl=$("g-lang"); if(gl) gl.onchange=()=>{ g.lang=gl.value; };
+  const cb=$("g-create");
+  cb.onclick=()=>{
+    const name=g.newName.trim();
+    if(!name){ g.err="Give the room a name."; render(); setTimeout(revealError,0); return; }
+    g.err="";
+    act(async()=>{
+      const id="room_"+Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+      await db.doc("rooms/"+id).set({name:name.slice(0,60),lang:g.lang||"",createdBy:S.uid,members:[S.uid],createdAt:Date.now()});
+      g.newName=""; g.activeId=id;
+    },cb,"Creating…");
+  };
+  view.querySelectorAll("[data-open-room]").forEach(b=>b.onclick=()=>{
+    g.activeId=b.dataset.openRoom; g.draft=""; render();
+  });
+  view.querySelectorAll("[data-del-room]").forEach(b=>b.onclick=async()=>{
+    const ok=await confirmDialog({title:"Delete this room?",body:"The room and everything said in it goes for everyone.",confirmLabel:"Delete",danger:true});
+    if(!ok) return;
+    await act(async()=>{
+      await db.doc("rooms/"+b.dataset.delRoom).delete();
+      await db.doc("roomchats/"+b.dataset.delRoom).delete();
+    });
+  });
+}
+
+/* ============================================================
+   16. Schedule
+   ============================================================ */
+function renderSchedule(){
+  const s=S.sched;
+  const L=buildLists();
+  const people=L.favorites.concat(L.convs,L.matches).map(e=>e.p);
+  const items=(S.settings.schedule||[]).slice()
+    .filter(x=>x.whenTs>=Date.now()-3600000).sort((a,b)=>a.whenTs-b.whenTs);
+  const past=(S.settings.schedule||[]).filter(x=>x.whenTs<Date.now()-3600000).length;
+
+  view.innerHTML='<div class="col">'+
+    pageHead("Schedule","Book a call for later",
+      "Your own reminder list. Times are shown in your timezone ("+tzLabel(S.profile.timezone)+") - check theirs in the thread header before proposing one.")+
+    '<div class="panel stack">'+
+      '<div class="field"><label>With</label><select id="s-who"><option value="">Choose a person…</option>'+
+        people.map(p=>'<option value="'+esc(p.id)+'"'+(s.withId===p.id?" selected":"")+'>'+esc(nameOf(p.id))+
+          (p.timezone?" — "+esc(tzNow(p.timezone))+" their time":"")+'</option>').join("")+'</select></div>'+
+      '<div class="field"><label>Date and time</label><input type="datetime-local" id="s-when" value="'+esc(s.when)+'"></div>'+
+      '<div class="field"><label>Note</label><input type="text" id="s-note" maxlength="140" placeholder="e.g. Practise ordering food in Spanish" value="'+esc(s.note)+'"></div>'+
+      (s.err?'<div class="err">'+esc(s.err)+'</div>':"")+
+      '<div><button class="btn primary" id="s-add">Add to schedule</button></div>'+
+    '</div>'+
+    '<div class="stack" style="gap:10px;">'+
+      '<h3 class="h-sec">Upcoming ('+items.length+')'+(past?' <span class="mini" style="font-weight:400;">· '+past+' past</span>':"")+'</h3>'+
+      (items.length?'<div class="panel flush">'+items.map(it=>{
+        const dt=new Date(it.whenTs);
+        const other=profileOf(it.withId);
+        return '<div class="list-row">'+
+          '<div class="when-block"><div class="d">'+esc(dt.toLocaleDateString(undefined,{month:"short",day:"numeric"}))+'</div>'+
+          '<div class="t num">'+esc(dt.toLocaleTimeString(undefined,{hour:"2-digit",minute:"2-digit"}))+'</div></div>'+
+          '<div class="body"><div style="font-weight:600;">'+esc(nameOf(it.withId))+'</div>'+
+          (it.note?'<div class="sub">'+esc(it.note)+'</div>':"")+
+          (other&&other.timezone?'<div class="tz">'+esc(new Intl.DateTimeFormat(undefined,{timeZone:other.timezone,hour:"2-digit",minute:"2-digit"}).format(dt))+' their time</div>':"")+
+          '</div>'+
+          '<button class="btn ghost sm" data-sched-open="'+esc(it.withId)+'">Open chat</button>'+
+          '<button class="icon-btn" data-sched-del="'+esc(it.id)+'" aria-label="Cancel">✕</button></div>';
+      }).join("")+'</div>':'<div class="empty">Nothing scheduled yet.</div>')+
+    '</div></div>';
+
+  const who=$("s-who"); if(who) who.onchange=()=>{ s.withId=who.value; };
+  const wh=$("s-when"); if(wh) wh.oninput=()=>{ s.when=wh.value; };
+  const nt=$("s-note"); if(nt) nt.oninput=()=>{ s.note=nt.value; };
+  const add=$("s-add");
+  add.onclick=()=>{
+    s.err="";
+    if(!s.withId) s.err="Choose who you are scheduling with.";
+    else if(!s.when) s.err="Pick a date and time.";
+    else{
+      const ts=new Date(s.when).getTime();
+      if(isNaN(ts)) s.err="That date did not parse. Pick it again.";
+      else if(ts<Date.now()) s.err="Pick a time in the future.";
+    }
+    if(s.err){ render(); setTimeout(revealError,0); return; }
+    act(async()=>{
+      const item={id:"s_"+Date.now().toString(36)+Math.random().toString(36).slice(2,6),
+        withId:s.withId,whenTs:new Date(s.when).getTime(),note:s.note.slice(0,140)};
+      await saveSettings({schedule:(S.settings.schedule||[]).concat([item])});
+      s.withId=""; s.when=""; s.note="";
+      toast("Added to your schedule.");
+    },add,"Adding…");
+  };
+  view.querySelectorAll("[data-sched-open]").forEach(b=>b.onclick=()=>openThreadWith(b.dataset.schedOpen));
+  view.querySelectorAll("[data-sched-del]").forEach(b=>b.onclick=()=>act(()=>
+    saveSettings({schedule:(S.settings.schedule||[]).filter(x=>x.id!==b.dataset.schedDel)})));
+}
+
+/* ============================================================
+   17. Practice
+   ============================================================ */
+function renderPractice(){
+  const p=S.profile, a=S.assign, st=S.settings.streak||{count:0,lastDate:""};
+  const today=todayStr(), doneToday=st.lastDate===today;
+  const target=normLangs(p.practices)[0]||null;
+  const targetName=target?langName(target.code):null;
+  const prompt=PRACTICE_PROMPTS[(new Date().getDate()+String(S.uid||"").length)%PRACTICE_PROMPTS.length];
+  const teachers=S.profiles.filter(x=>x.id!==S.uid&&x.isTeacher&&
+    S.certs.some(c=>c.uid===x.id&&(!target||c.code===target.code)));
+
+  let assignHtml;
+  if(!target){
+    assignHtml='<div class="empty">Add a language you are learning in your Profile to get daily assignments.</div>';
+  }else if(sampleUnavailable()&&a.status==="idle"){
+    assignHtml='<div class="note warn">Daily assignments are written and marked by Claude, which is not available in this view. The streak and prompt above still work.</div>';
+  }else if(a.status==="idle"){
+    assignHtml='<div class="panel stack" style="box-shadow:none;background:var(--surface-2);">'+
+      '<div class="mini">Today’s assignment · '+esc(targetName)+' · '+esc(target.level)+'</div>'+
+      '<p class="sub">A short piece of writing pitched at your level, then feedback on what you wrote.</p>'+
+      (a.err?'<div class="err">'+esc(a.err)+'</div>':"")+
+      '<div><button class="btn primary" id="a-gen">Generate today’s assignment</button></div></div>';
+  }else if(a.status==="generating"){
+    assignHtml='<div class="panel stack" style="box-shadow:none;background:var(--surface-2);"><div class="thinking"><span class="spin"></span>Writing your assignment…</div></div>';
+  }else if(a.status==="writing"||a.status==="grading"){
+    assignHtml='<div class="panel stack" style="box-shadow:none;background:var(--surface-2);">'+
+      '<div class="mini">Today’s assignment · '+esc(targetName)+'</div>'+
+      '<div style="font-size:14.5px;">'+esc(a.prompt)+'</div>'+
+      '<textarea id="a-resp" placeholder="Write your response in '+esc(targetName)+'…"'+(a.status==="grading"?" disabled":"")+'>'+esc(a.response)+'</textarea>'+
+      (a.err?'<div class="err">'+esc(a.err)+'</div>':"")+
+      '<div class="row wrap">'+
+        '<button class="btn primary" id="a-grade"'+(a.status==="grading"?" disabled":"")+'>'+(a.status==="grading"?"Marking…":"Get feedback from Claude")+'</button>'+
+        (S.settings.premium&&teachers.length
+          ? '<button class="btn ghost" id="a-teacher">Send to a teacher instead</button>'
+          : '<span class="sub">'+(teachers.length?"Premium sends this to a certified teacher for human correction.":"No certified teacher for this language yet.")+'</span>')+
+      '</div></div>';
+  }else{
+    assignHtml='<div class="panel stack" style="box-shadow:none;background:var(--surface-2);">'+
+      '<div class="mini">Today’s assignment · '+esc(targetName)+'</div>'+
+      '<div style="font-size:14.5px;">'+esc(a.prompt)+'</div>'+
+      '<div class="translation" style="font-style:normal;">'+esc(a.response)+'</div>'+
+      '<div class="mini">Feedback'+(a.sentTo?" · "+esc(nameOf(a.sentTo)):" · Claude")+'</div>'+
+      '<div class="feedback">'+esc(a.feedback)+'</div>'+
+      '<div><button class="btn ghost" id="a-new">New assignment</button></div></div>';
+  }
+
+  const ladder=[];
+  for(let i=0;i<7;i++) ladder.push('<i class="'+(i<Math.min(st.count,7)?"on":"")+'"></i>');
+
+  view.innerHTML='<div class="col">'+
+    pageHead("Practice","Keep the habit going","Mark the day once you have practised - on a call, in a room, or on your own.")+
+    '<div class="streak-card">'+
+      '<div><div class="streak-n num">'+st.count+'</div>'+
+        '<div class="mini">day'+(st.count===1?"":"s")+' in a row</div>'+
+        '<div class="streak-ladder">'+ladder.join("")+'</div></div>'+
+      '<div style="flex:1;"></div>'+
+      '<button class="btn primary" id="mark-day"'+(doneToday?" disabled":"")+'>'+(doneToday?"✓ Logged for today":"Mark today practised")+'</button>'+
+    '</div>'+
+    '<div class="panel stack">'+
+      '<div class="mini">Today’s prompt</div>'+
+      '<p style="font-size:15px;">'+esc(prompt)+'</p>'+
+      '<p class="sub">Try it in '+esc(normLangs(p.practices).map(e=>langName(e.code)).join(" or ")||"your target language")+'. Say it out loud, write it down, or bring it into your next call.</p>'+
+    '</div>'+
+    '<div class="stack" style="gap:10px;"><h3 class="h-sec">Daily assignment</h3>'+assignHtml+'</div>'+
+    '<div class="panel stack">'+
+      '<div class="row" style="justify-content:space-between;gap:12px;">'+
+        '<div><h3 class="h-sec">Premium</h3><p class="sub">Routes your assignment to a certified teacher for human correction instead of AI feedback. Nothing is charged in this prototype - the toggle just shows how the tier works.</p></div>'+
+      '</div>'+
+      '<label class="checkline"><input type="checkbox" id="prem"'+(S.settings.premium?" checked":"")+'>'+
+        '<span>Simulate a Premium subscription</span></label>'+
+    '</div>'+
+    adFor(st.count)+
+  '</div>';
+
+  $("mark-day").onclick=e=>act(async()=>{
+    const last=st.lastDate;
+    const count=(!last)?1:(dayDiff(last,today)===1?st.count+1:(dayDiff(last,today)===0?st.count:1));
+    await saveSettings({streak:{count:count,lastDate:today}});
+    toast(count>1?"Day "+count+". Keep it going.":"Streak started.");
+  },e.currentTarget,"Saving…");
+  $("prem").onchange=e=>act(()=>saveSettings({premium:e.target.checked}));
+
+  const gen=$("a-gen");
+  if(gen) gen.onclick=async()=>{
+    a.err=""; a.status="generating"; render();
+    try{
+      const out=await askJSON('Write ONE short daily writing assignment for a '+target.level+'-level learner of '+targetName+
+        ', doable in 3-6 sentences, on an everyday topic. Give the instruction in English. Reply with only JSON: {"prompt":"..."}',"quick");
+      if(!out||!out.prompt) throw {code:"invalid_json",message:"malformed"};
+      a.prompt=out.prompt; a.response=""; a.feedback=""; a.sentTo=null; a.status="writing";
+    }catch(e){ a.status="idle"; a.err=sampleErrorCopy(e); setTimeout(revealError,80); }
+    render();
+  };
+  const resp=$("a-resp"); if(resp) resp.oninput=()=>{ a.response=resp.value; };
+  const grade=$("a-grade");
+  if(grade) grade.onclick=async()=>{
+    const text=(a.response||"").trim();
+    if(!text){ a.err="Write something first."; render(); setTimeout(revealError,0); return; }
+    a.err=""; a.status="grading"; render();
+    try{
+      const out=await askJSON("You are a supportive "+targetName+" tutor marking a learner's short written assignment. Point out grammar and vocabulary errors, give the corrected phrasing, and end with brief encouragement. Under 150 words.\n"+
+        'Reply with only JSON: {"correction":"..."}\n\nAssignment: '+a.prompt+"\n\nLearner wrote: "+text,"default");
+      if(!out||!out.correction) throw {code:"invalid_json",message:"malformed"};
+      a.feedback=out.correction; a.sentTo=null; a.status="graded";
+    }catch(e){ a.status="writing"; a.err=sampleErrorCopy(e); setTimeout(revealError,80); }
+    render();
+  };
+  const toTeacher=$("a-teacher");
+  if(toTeacher) toTeacher.onclick=()=>{
+    const text=(a.response||"").trim();
+    if(!text){ a.err="Write something first."; render(); setTimeout(revealError,0); return; }
+    const t=teachers[0];
+    act(async()=>{
+      const id="as_"+Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+      await db.doc("assignments/"+id).set({studentId:S.uid,teacherId:t.id,lang:target.code,
+        prompt:a.prompt,response:text,status:"pending",correction:"",createdAt:Date.now()});
+      a.status="idle"; a.prompt=""; a.response="";
+      toast("Sent to "+nameOf(t.id)+" for correction.");
+    },toTeacher,"Sending…");
+  };
+  const anew=$("a-new");
+  if(anew) anew.onclick=()=>{ S.assign={status:"idle",prompt:"",response:"",feedback:"",err:"",sentTo:null}; render(); };
+
+  const mine=S.assignments.filter(x=>x.studentId===S.uid).sort((x,y)=>y.createdAt-x.createdAt);
+  if(mine.length){
+    const host=document.createElement("div");
+    host.className="stack"; host.style.gap="10px";
+    host.innerHTML='<h3 class="h-sec">Sent to a teacher</h3><div class="panel flush">'+mine.map(it=>
+      '<div class="list-row"><div class="body">'+
+        '<div style="font-weight:600;">'+esc(langName(it.lang))+' · '+esc(nameOf(it.teacherId))+'</div>'+
+        '<div class="sub">'+esc(truncate(it.prompt,80))+'</div>'+
+        (it.status==="returned"?'<div class="feedback" style="margin-top:8px;">'+esc(it.correction)+'</div>':"")+
+      '</div><span class="pill '+(it.status==="returned"?"ok":"warn")+'">'+(it.status==="returned"?"returned":"waiting")+'</span></div>').join("")+'</div>';
+    view.querySelector(".col").insertBefore(host,view.querySelector(".col").lastElementChild);
+  }
+}
+
+/* ============================================================
+   18. Teachers
+   ============================================================ */
+async function downscaleImage(file,maxDim,quality){
+  const bmp=await createImageBitmap(file);
+  const scale=Math.min(1,maxDim/Math.max(bmp.width,bmp.height));
+  const c=document.createElement("canvas");
+  c.width=Math.max(1,Math.round(bmp.width*scale));
+  c.height=Math.max(1,Math.round(bmp.height*scale));
+  c.getContext("2d").drawImage(bmp,0,0,c.width,c.height);
+  if(bmp.close) bmp.close();
+  return c.toDataURL("image/jpeg",quality);
+}
+function certsOf(uid){ return S.certs.filter(c=>c.uid===uid); }
+
+function renderFindTeacher(){
+  const blocks=S.settings.blocks||[];
+  let list=S.profiles.filter(p=>p.id!==S.uid&&p.isTeacher&&blocks.indexOf(p.id)<0&&certsOf(p.id).length>0);
+  list.sort((a,b)=>certsOf(b.id).length-certsOf(a.id).length);
+
+  view.innerHTML='<div class="stack" style="gap:18px;">'+
+    pageHead("Find a Teacher","Members teaching with a certificate on file",
+      "Each badge is a certificate the teacher uploaded themselves - TOEFL, Goethe-Zertifikat, DELE, HSK and the rest. Nobody on staff has reviewed them, so read them the way you would any marketplace listing.")+
+    '<div class="panel row wrap" style="justify-content:space-between;">'+
+      '<span class="sub">The only way to teach here is to upload a TOEFL, IELTS, DELE, Goethe or equivalent certificate.</span>'+
+      '<span class="mini">'+list.length+' listed</span>'+
+    '</div>'+
+    (list.length?'<div class="cardgrid">'+list.map(p=>{
+      const certs=certsOf(p.id);
+      return '<article class="person-card">'+
+        '<div class="hd">'+sheetAvatar(p.id,"m")+
+          '<div class="body"><button class="name-btn nm" data-sheet="'+esc(p.id)+'">'+esc(nameOf(p.id))+'</button>'+
+          '<div class="tz">'+esc(p.timezone?tzNow(p.timezone)+" local":"Timezone not set")+(p.teacherRate?' · '+esc(p.teacherRate):"")+'</div></div>'+
+          '<button class="icon-btn" data-menu="'+esc(p.id)+'" aria-label="More options">⋯</button></div>'+
+        (p.teacherBio?'<p class="bio">'+esc(truncate(p.teacherBio,150))+'</p>':"")+
+        '<div><div class="mini" style="margin-bottom:5px;">Certified to teach</div><div class="chips">'+
+          certs.map(c=>'<span class="cert-badge" title="'+esc(c.certType)+(c.score?" · "+esc(c.score):"")+'">'+
+            esc(langName(c.code))+' · '+esc(c.certType)+'</span>').join("")+
+        '</div></div>'+
+        '<button class="btn primary block" data-msg="'+esc(p.id)+'">Message '+esc(nameOf(p.id).split(" ")[0])+'</button>'+
+      '</article>';
+    }).join("")+'</div>'
+      :'<div class="empty">No certified teachers yet. You can become one from the Become a Teacher tab.</div>')+
+  '</div>';
+
+  view.querySelectorAll("[data-msg]").forEach(b=>b.onclick=()=>openThreadWith(b.dataset.msg));
+  view.querySelectorAll("[data-menu]").forEach(b=>b.onclick=e=>{
+    e.stopPropagation(); openMenu(b,personMenuItems(b.dataset.menu,{conversation:!!convFor(b.dataset.menu)}));
+  });
+}
+
+function renderBecomeTeacher(){
+  const p=S.profile, t=S.teacher;
+  if(!t.dirty){ t.bio=p.teacherBio||""; t.rate=p.teacherRate||""; t.listed=!!p.isTeacher; }
+  const mine=certsOf(S.uid);
+  const haveCodes=mine.map(c=>c.code);
+  const available=normLangs(p.speaks).filter(e=>haveCodes.indexOf(e.code)<0);
+  const queue=S.assignments.filter(x=>x.teacherId===S.uid).sort((a,b)=>b.createdAt-a.createdAt);
+
+  view.innerHTML='<div class="col">'+
+    pageHead("Become a Teacher","Certify a language you speak",
+      "A language certificate - TOEFL, IELTS, Cambridge, DELE, DELF, Goethe, HSK, JLPT, TOPIK or equivalent - is the only way to become a teacher here. Quiz scores don't count. Upload one for each language you want to teach. It is self-submitted and shown to students as such - a production build would need a review pipeline and a fraud policy before any of this counted as verification.")+
+
+    (mine.length?'<div class="stack" style="gap:10px;"><h3 class="h-sec">Your certificates</h3>'+
+      mine.map(c=>'<div class="cert-row">'+
+        '<img class="cert-thumb" src="'+esc(c.img)+'" alt="Certificate for '+esc(langName(c.code))+'">'+
+        '<div class="body"><div style="font-weight:600;">'+esc(langName(c.code))+' · '+esc(c.certType)+'</div>'+
+        '<div class="sub">'+(c.score?esc(c.score)+' · ':"")+'Submitted '+esc(new Date(c.submittedAt).toLocaleDateString())+'</div></div>'+
+        '<button class="icon-btn" data-cert-del="'+esc(c.id)+'" aria-label="Remove certificate">✕</button></div>').join("")+
+    '</div>':"")+
+
+    '<div class="panel stack">'+
+      '<h3 class="h-sec">Add a certificate</h3>'+
+      (available.length?
+        '<div class="field"><label>Language</label><select id="bt-lang"><option value="">Choose a language you speak…</option>'+
+          available.map(e=>'<option value="'+e.code+'"'+(t.lang===e.code?" selected":"")+'>'+esc(langName(e.code))+' · '+e.level+'</option>').join("")+'</select></div>'+
+        '<div class="field"><label>Certificate</label><select id="bt-type">'+
+          CERT_TYPES.map(c=>'<option'+(t.certType===c?" selected":"")+'>'+esc(c)+'</option>').join("")+'</select></div>'+
+        '<div class="field"><label>Score or grade</label><input type="text" id="bt-score" placeholder="e.g. TOEFL 108, IELTS 7.5, or C1" value="'+esc(t.score)+'"></div>'+
+        '<div class="field"><label>Certificate image</label><input type="file" id="bt-file" accept="image/*">'+
+          '<p class="sub" style="margin-top:4px;">Resized in your browser before upload, so a phone photo is fine.</p>'+
+          (t.imgData?'<img class="cert-preview" src="'+esc(t.imgData)+'" alt="Certificate preview">':"")+'</div>'+
+        (t.err?'<div class="err">'+esc(t.err)+'</div>':"")+
+        '<div><button class="btn primary" id="bt-submit"'+(t.busy?" disabled":"")+'>'+(t.busy?"Submitting…":"Submit certificate")+'</button></div>'
+        :'<div class="empty">Every language you speak already has a certificate. Add another under Profile first.</div>')+
+    '</div>'+
+
+    '<div class="panel stack">'+
+      '<h3 class="h-sec">Your listing</h3>'+
+      '<label class="checkline"><input type="checkbox" id="bt-listed"'+(t.listed?" checked":"")+(mine.length?"":" disabled")+'>'+
+        '<span>List me under Find a Teacher'+(mine.length?"":" — submit at least one certificate first")+'</span></label>'+
+      '<div class="field"><label>Teaching bio</label><textarea id="bt-bio" placeholder="What is your teaching style? Any specialities?">'+esc(t.bio)+'</textarea></div>'+
+      '<div class="field"><label>Rate per session</label><input type="text" id="bt-rate" placeholder="e.g. $20/hr, or Free" value="'+esc(t.rate)+'"></div>'+
+      '<div class="note">LinguaConnect takes a <strong>'+PLATFORM_FEE_PCT+'% platform fee</strong> on paid bookings, alongside the ads students see. You keep the rest. No payment is processed in this prototype - a real build would need Stripe Connect to split it.</div>'+
+      '<div><button class="btn primary" id="bt-save">Save listing</button></div>'+
+    '</div>'+
+
+    '<div class="stack" style="gap:10px;">'+
+      '<h3 class="h-sec">Student submissions ('+queue.filter(x=>x.status==="pending").length+' waiting)</h3>'+
+      (queue.length?'<div class="panel flush">'+queue.map(it=>
+        '<div class="list-row" style="align-items:flex-start;">'+
+          '<div class="body"><div style="font-weight:600;">'+esc(nameOf(it.studentId))+' · '+esc(langName(it.lang))+'</div>'+
+          '<div class="sub" style="margin:4px 0;">'+esc(it.prompt)+'</div>'+
+          '<div class="translation" style="font-style:normal;">'+esc(it.response)+'</div>'+
+          (it.status==="returned"
+            ? '<div class="feedback" style="margin-top:8px;">'+esc(it.correction)+'</div>'
+            : '<textarea data-corr="'+esc(it.id)+'" placeholder="Your correction and feedback…" style="margin-top:8px;"></textarea>'+
+              '<div class="row" style="margin-top:6px;"><button class="btn primary sm" data-corr-send="'+esc(it.id)+'">Return correction</button></div>')+
+          '</div></div>').join("")+'</div>'
+        :'<div class="empty">Nothing submitted to you yet. Premium students can send assignments here once you are listed.</div>')+
+    '</div></div>';
+
+  const mark=()=>{ t.dirty=true; };
+  const lg=$("bt-lang"); if(lg) lg.onchange=()=>{ t.lang=lg.value; };
+  const ty=$("bt-type"); if(ty) ty.onchange=()=>{ t.certType=ty.value; };
+  const sc=$("bt-score"); if(sc) sc.oninput=()=>{ t.score=sc.value; };
+  const bio=$("bt-bio"); if(bio) bio.oninput=()=>{ mark(); t.bio=bio.value; };
+  const rate=$("bt-rate"); if(rate) rate.oninput=()=>{ mark(); t.rate=rate.value; };
+  const listed=$("bt-listed"); if(listed) listed.onchange=()=>{ mark(); t.listed=listed.checked; };
+
+  const file=$("bt-file");
+  if(file) file.onchange=async()=>{
+    const f=file.files&&file.files[0];
+    if(!f) return;
+    t.err=""; render();
+    try{
+      let data=await downscaleImage(f,1100,.72);
+      if(data.length>MAX_CERT_CHARS) data=await downscaleImage(f,850,.6);
+      if(data.length>MAX_CERT_CHARS) data=await downscaleImage(f,650,.5);
+      if(data.length>MAX_CERT_CHARS){ t.err="That image is still too large after resizing. Try a tighter crop."; }
+      else{ t.imgData=data; t.imgName=f.name; }
+    }catch(e){ t.err="That file could not be read as an image."; }
+    render();
+    if(t.err) revealError();
+  };
+  const sub=$("bt-submit");
+  if(sub) sub.onclick=()=>{
+    t.err="";
+    if(!t.lang) t.err="Choose which language this certificate is for.";
+    else if(!t.imgData) t.err="Upload an image of the certificate.";
+    if(t.err){ render(); setTimeout(revealError,0); return; }
+    t.busy=true; render();
+    act(async()=>{
+      const id=S.uid+"__"+t.lang;
+      await db.doc("certs/"+id).set({uid:S.uid,code:t.lang,certType:t.certType,
+        score:t.score.slice(0,40),img:t.imgData,submittedAt:Date.now()});
+      t.lang=""; t.score=""; t.imgData=""; t.imgName=""; t.busy=false;
+      toast("Certificate submitted.");
+    }).then(()=>{ t.busy=false; render(); });
+  };
+  view.querySelectorAll("[data-cert-del]").forEach(b=>b.onclick=async()=>{
+    const ok=await confirmDialog({title:"Remove this certificate?",body:"If it is your last one, your teacher listing comes down too.",confirmLabel:"Remove",danger:true});
+    if(!ok) return;
+    await act(async()=>{
+      await db.doc("certs/"+b.dataset.certDel).delete();
+      if(certsOf(S.uid).filter(c=>c.id!==b.dataset.certDel).length===0&&p.isTeacher){
+        await saveProfile({isTeacher:false});
+        t.listed=false;
+      }
+    });
+  });
+  const save=$("bt-save");
+  save.onclick=()=>{
+    if(t.listed&&mine.length===0){
+      toast("Submit at least one certificate before listing yourself.");
+      return;
+    }
+    act(async()=>{
+      await saveProfile({isTeacher:t.listed,teacherBio:t.bio.slice(0,400),teacherRate:t.rate.slice(0,40)});
+      t.dirty=false;
+      toast(t.listed?"You are listed under Find a Teacher.":"Listing saved.");
+    },save,"Saving…");
+  };
+  view.querySelectorAll("[data-corr-send]").forEach(b=>b.onclick=()=>{
+    const id=b.dataset.corrSend;
+    const ta=view.querySelector('[data-corr="'+id+'"]');
+    const text=ta?ta.value.trim():"";
+    if(!text){ toast("Write your correction first."); return; }
+    act(async()=>{
+      await db.doc("assignments/"+id).update({correction:text,status:"returned",returnedAt:Date.now()});
+      toast("Correction returned.");
+    },b,"Sending…");
+  });
+}
+
+/* ============================================================
+   19. Calls - WebRTC signalled through the shared database
+   ============================================================ */
+const ICE={iceServers:[{urls:"stun:stun.l.google.com:19302"},{urls:"stun:stun1.l.google.com:19302"}]};
+
+/* Every handle this module owns is declared here, before use. */
+const C={
+  active:false, role:null, cid:null, callId:null, peer:null, mode:"video",
+  status:"idle", pc:null, local:null, remote:null,
+  micOn:true, camOn:true, message:"",
+  appliedRemote:0, pendingLocal:[], flushHandle:null, unsubDoc:null, dismissed:{},
+  demo:false, demoHandle:null, tickHandle:null, connectedAt:0
+};
+let incomingCalls=[];
+
+function callDocRef(cid){ return db.doc("calls/"+cid); }
+function fmtDuration(ms){
+  const s=Math.max(0,Math.floor(ms/1000));
+  return Math.floor(s/60)+":"+String(s%60).padStart(2,"0");
+}
+/* Updates only the status line once a second, so the <video> elements are
+   never rebuilt mid-call. */
+function tickCall(){
+  const el=$("c-status");
+  if(el&&C.status==="connected"&&C.connectedAt) el.textContent=callStatusLabel()+(C.mode==="audio"?" · audio only":"");
+}
+function markConnected(){
+  if(!C.connectedAt) C.connectedAt=Date.now();
+  if(!C.tickHandle) C.tickHandle=setInterval(tickCall,1000);
+}
+/* Demo calls run the real call screen, with your own camera and mic, but
+   no second person: the partner side is simulated. */
+async function startDemoCall(peer,mode,answered){
+  if(C.active){ toast("You are already in a call."); return; }
+  C.active=true; C.demo=true; C.role=answered?"callee":"caller"; C.peer=peer; C.mode=mode;
+  C.callId="demo_"+Date.now().toString(36); C.status=answered?"connecting":"calling";
+  C.message=""; C.camOn=mode==="video"; C.micOn=true;
+  renderCallUI();
+  try{ C.local=await getMedia(mode); }
+  catch(e){
+    C.local=null;
+    C.message=(e&&e.name==="NotAllowedError")
+      ?"Camera/mic access is blocked, so you won't see yourself - the demo carries on without it."
+      :"No camera or mic available here - the demo carries on without it.";
+  }
+  if(!C.active) { if(C.local) C.local.getTracks().forEach(t=>t.stop()); return; }
+  if(!answered){ C.status="ringing"; renderCallUI(); }
+  C.demoHandle=setTimeout(()=>{
+    if(!C.active||!C.demo) return;
+    C.status="connected"; markConnected(); renderCallUI();
+  },answered?900:2600);
+}
+function resetCall(){
+  if(C.demoHandle){ clearTimeout(C.demoHandle); C.demoHandle=null; }
+  if(C.tickHandle){ clearInterval(C.tickHandle); C.tickHandle=null; }
+  C.demo=false; C.connectedAt=0;
+  if(C.flushHandle){ clearTimeout(C.flushHandle); C.flushHandle=null; }
+  if(C.unsubDoc){ try{ C.unsubDoc(); }catch(e){} C.unsubDoc=null; }
+  if(C.pc){ try{ C.pc.close(); }catch(e){} C.pc=null; }
+  if(C.local){ C.local.getTracks().forEach(t=>{ try{ t.stop(); }catch(e){} }); }
+  C.active=false; C.role=null; C.cid=null; C.callId=null; C.peer=null;
+  C.status="idle"; C.local=null; C.remote=null; C.micOn=true; C.camOn=true;
+  C.message=""; C.appliedRemote=0; C.pendingLocal=[];
+  callLayer.innerHTML="";
+}
+function flushCandidates(){
+  if(C.flushHandle){ clearTimeout(C.flushHandle); C.flushHandle=null; }
+  if(!C.cid||!C.pendingLocal.length) return;
+  const batch=C.pendingLocal.splice(0,C.pendingLocal.length);
+  const field=C.role==="caller"?"offerCands":"ansCands";
+  const path="calls/"+C.cid;
+  qWrite(path,async()=>{
+    const snap=await callDocRef(C.cid).get();
+    if(!snap.exists) return;
+    const cur=snap.data()||{};
+    if(cur.callId!==C.callId) return;
+    const patch={};
+    patch[field]=(cur[field]||[]).concat(batch).slice(-60);
+    await callDocRef(C.cid).update(patch);
+  }).catch(()=>{});
+}
+function queueCandidate(c){
+  C.pendingLocal.push(c);
+  if(C.flushHandle) return;
+  C.flushHandle=setTimeout(flushCandidates,450);
+}
+async function getMedia(mode){
+  if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia)
+    throw new Error("This browser will not give the page a camera or microphone.");
+  return await navigator.mediaDevices.getUserMedia({audio:true,video:mode==="video"});
+}
+function buildPeer(){
+  const pc=new RTCPeerConnection(ICE);
+  C.remote=new MediaStream();
+  pc.ontrack=e=>{
+    e.streams[0].getTracks().forEach(t=>{ if(C.remote.getTrackById(t.id)==null) C.remote.addTrack(t); });
+    renderCallUI();
+  };
+  pc.onicecandidate=e=>{ if(e.candidate) queueCandidate(e.candidate.toJSON()); };
+  pc.onconnectionstatechange=()=>{
+    if(!C.active) return;
+    if(pc.connectionState==="connected"){ C.status="connected"; C.message=""; markConnected(); }
+    else if(pc.connectionState==="failed"){
+      C.status="failed";
+      C.message="The direct connection could not be established. This prototype uses public STUN only - a real deployment needs a TURN relay for restrictive networks.";
+    }
+    renderCallUI();
+  };
+  C.local.getTracks().forEach(t=>pc.addTrack(t,C.local));
+  return pc;
+}
+function watchCallDoc(){
+  if(C.unsubDoc){ try{ C.unsubDoc(); }catch(e){} }
+  C.unsubDoc=callDocRef(C.cid).onSnapshot(async snap=>{
+    if(!C.active) return;
+    if(!snap.exists){ endCall(true,"The call ended."); return; }
+    const d=snap.data()||{};
+    if(d.callId!==C.callId) return;
+    try{
+      if(C.role==="caller"&&d.status==="accepted"&&d.answer&&C.pc&&!C.pc.currentRemoteDescription){
+        await C.pc.setRemoteDescription(new RTCSessionDescription(d.answer));
+        C.status="connecting"; renderCallUI();
+      }
+      const theirs=(C.role==="caller"?d.ansCands:d.offerCands)||[];
+      if(theirs.length>C.appliedRemote&&C.pc&&C.pc.remoteDescription){
+        for(let i=C.appliedRemote;i<theirs.length;i++){
+          try{ await C.pc.addIceCandidate(new RTCIceCandidate(theirs[i])); }catch(e){}
+        }
+        C.appliedRemote=theirs.length;
+      }
+      if(d.status==="declined"){ endCall(true,nameOf(C.peer)+" declined."); return; }
+      if(d.status==="ended"){ endCall(true,"Call ended."); return; }
+    }catch(e){ console.warn("call signalling",e); }
+  },e=>{ console.warn("call snapshot",e); });
+}
+async function startCall(otherId,mode){
+  if(C.active){ toast("You are already in a call."); return; }
+  if((S.settings.blocks||[]).indexOf(otherId)>=0){ toast("Unblock "+nameOf(otherId)+" to call them."); return; }
+  if(isDemo(otherId)) return startDemoCall(otherId,mode,false);
+  const cid=convId(S.uid,otherId);
+  C.active=true; C.role="caller"; C.cid=cid; C.peer=otherId; C.mode=mode;
+  C.callId="c_"+Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+  C.status="calling"; C.message=""; C.appliedRemote=0; C.camOn=mode==="video";
+  renderCallUI();
+  try{
+    C.local=await getMedia(mode);
+    C.pc=buildPeer();
+    const offer=await C.pc.createOffer();
+    await C.pc.setLocalDescription(offer);
+    await qWrite("calls/"+cid,()=>callDocRef(cid).set({
+      participants:[S.uid,otherId].sort(),callId:C.callId,from:S.uid,to:otherId,mode:mode,
+      status:"ringing",offer:{type:offer.type,sdp:offer.sdp},answer:null,
+      offerCands:[],ansCands:[],startedAt:Date.now()
+    }));
+    C.status="ringing";
+    watchCallDoc();
+    renderCallUI();
+  }catch(e){
+    console.error(e);
+    C.status="failed";
+    C.message=(e&&e.name==="NotAllowedError")
+      ?"Camera and microphone access was blocked. Allow it for this page and try again."
+      :(e&&e.message)||"Could not start the call.";
+    renderCallUI();
+  }
+}
+async function acceptCall(doc){
+  if(C.active){ toast("You are already in a call."); return; }
+  C.active=true; C.role="callee"; C.cid=doc.id; C.peer=doc.from; C.mode=doc.mode||"video";
+  C.callId=doc.callId; C.status="connecting"; C.message=""; C.appliedRemote=0; C.camOn=C.mode==="video";
+  renderCallUI();
+  try{
+    C.local=await getMedia(C.mode);
+    C.pc=buildPeer();
+    await C.pc.setRemoteDescription(new RTCSessionDescription(doc.offer));
+    const answer=await C.pc.createAnswer();
+    await C.pc.setLocalDescription(answer);
+    await qWrite("calls/"+C.cid,()=>callDocRef(C.cid).update({
+      status:"accepted",answer:{type:answer.type,sdp:answer.sdp}
+    }));
+    const theirs=doc.offerCands||[];
+    for(let i=0;i<theirs.length;i++){ try{ await C.pc.addIceCandidate(new RTCIceCandidate(theirs[i])); }catch(e){} }
+    C.appliedRemote=theirs.length;
+    watchCallDoc();
+    renderCallUI();
+  }catch(e){
+    console.error(e);
+    C.status="failed";
+    C.message=(e&&e.name==="NotAllowedError")
+      ?"Camera and microphone access was blocked. Allow it for this page and try again."
+      :(e&&e.message)||"Could not join the call.";
+    renderCallUI();
+  }
+}
+function declineCall(doc){
+  C.dismissed[doc.callId]=true;
+  qWrite("calls/"+doc.id,()=>callDocRef(doc.id).update({status:"declined"})).catch(()=>{});
+  render();
+}
+function endCall(remote,msg){
+  const cid=C.cid, id=C.callId;
+  if(!remote&&cid){
+    qWrite("calls/"+cid,()=>callDocRef(cid).update({status:"ended"})).catch(()=>{});
+  }
+  if(id) C.dismissed[id]=true;
+  resetCall();
+  if(msg) toast(msg);
+  render();
+}
+function toggleMic(){
+  if(!C.local){ toast("No microphone in this call."); return; }
+  C.micOn=!C.micOn;
+  C.local.getAudioTracks().forEach(t=>{ t.enabled=C.micOn; });
+  renderCallUI();
+}
+function toggleCam(){
+  if(!C.local){ toast("No camera in this call."); return; }
+  C.camOn=!C.camOn;
+  C.local.getVideoTracks().forEach(t=>{ t.enabled=C.camOn; });
+  renderCallUI();
+}
+function callStatusLabel(){
+  if(C.status==="connected"&&C.connectedAt) return "Connected · "+fmtDuration(Date.now()-C.connectedAt);
+  return {calling:"Starting…",ringing:"Ringing…",connecting:"Connecting…",
+    connected:"Connected",failed:"Could not connect"}[C.status]||"";
+}
+function renderCallUI(){
+  if(!C.active){ callLayer.innerHTML=""; return; }
+  const showVideo=C.mode==="video";
+  const live=C.status==="connected";
+  /* Partner side: their video on a real call; their photo when it is audio
+     only, still ringing, or the demo (which has no one on the other end). */
+  const partnerPhoto='<div style="display:flex;flex-direction:column;align-items:center;gap:12px;">'+
+      '<img class="call-demo-av'+(live?" live":"")+'" src="'+esc(avatarOf(C.peer))+'" alt="">'+
+      (C.demo?"":'<audio id="v-remote" autoplay></audio>')+'</div>';
+  const partner=(showVideo&&!C.demo)?'<video class="remote" id="v-remote" autoplay playsinline></video>':partnerPhoto;
+  const selfTile=showVideo
+    ? ((C.local&&C.camOn)?'<video class="local" id="v-local" autoplay playsinline muted></video>'
+        :'<div class="cam-off">'+(C.local?"Your camera is off":"No camera")+'</div>')
+    : "";
+  const btn=(id,cls,label,glyph)=>'<div class="call-btn-wrap"><button class="call-btn'+cls+'" id="'+id+'" title="'+label+'" aria-label="'+label+'">'+glyph+'</button><span>'+label+'</span></div>';
+  callLayer.innerHTML=
+    '<div class="call-stage">'+
+      partner+selfTile+
+      '<div class="call-info"><div class="nm">'+esc(nameOf(C.peer))+'</div>'+
+        '<div class="st" id="c-status">'+esc(callStatusLabel())+(C.mode==="audio"?" · audio only":"")+'</div>'+
+        (C.message?'<div style="color:#FCA5A5;font-size:12.5px;max-width:44ch;margin:6px auto 0;">'+esc(C.message)+'</div>':"")+
+        (C.demo?'<div class="call-demo-note">Demo call - nobody is on the other end. With a real match you\'d see and hear them here.</div>':"")+
+      '</div>'+
+    '</div>'+
+    '<div class="call-bar">'+
+      btn("c-mic",C.micOn?"":" off",C.micOn?"Mute":"Unmute",C.micOn?"🎙":"🔇")+
+      (showVideo?btn("c-cam",C.camOn?"":" off",C.camOn?"Camera":"Camera off",C.camOn?"📷":"🚫"):"")+
+      btn("c-end"," hang","End","✕")+
+    '</div>';
+  const r=$("v-remote"); if(r&&C.remote&&r.srcObject!==C.remote) r.srcObject=C.remote;
+  const l=$("v-local"); if(l&&C.local&&l.srcObject!==C.local) l.srcObject=C.local;
+  const mic=$("c-mic"); if(mic) mic.onclick=toggleMic;
+  const cam=$("c-cam"); if(cam) cam.onclick=toggleCam;
+  $("c-end").onclick=()=>endCall(false,null);
+}
+function renderIncomingCall(){
+  if(C.active) return;
+  const now=Date.now();
+  const blocks=S.settings.blocks||[];
+  const ring=incomingCalls.concat(S.demoRing?[S.demoRing]:[]).filter(d=>d.status==="ringing"&&d.to===S.uid&&
+    blocks.indexOf(d.from)<0&&!C.dismissed[d.callId]&&now-(d.startedAt||0)<90000)[0];
+  const existing=document.querySelector(".incoming");
+  if(!ring){ if(existing) existing.remove(); return; }
+  if(existing&&existing.dataset.callId===ring.callId) return;
+  if(existing) existing.remove();
+  const el=document.createElement("div");
+  el.className="incoming"; el.dataset.callId=ring.callId;
+  el.innerHTML='<div class="row">'+avatarHtml(ring.from,"m",false)+
+    '<div><div style="font-weight:700;">'+esc(nameOf(ring.from))+'</div>'+
+    '<div class="mini">Incoming '+(ring.mode==="audio"?"📞 phone":"🎥 video")+' call</div></div></div>'+
+    '<div class="row" style="gap:8px;"><button class="btn primary sm" id="in-accept">Accept</button>'+
+    '<button class="btn ghost sm" id="in-decline">Decline</button></div>';
+  document.body.appendChild(el);
+  const fromDemo=isDemo(ring.from);
+  el.querySelector("#in-accept").onclick=()=>{
+    el.remove();
+    if(fromDemo){ S.demoRing=null; startDemoCall(ring.from,ring.mode,true); } else acceptCall(ring);
+  };
+  el.querySelector("#in-decline").onclick=()=>{
+    el.remove();
+    if(fromDemo){ S.demoRing=null; toast("Call declined."); render(); } else declineCall(ring);
+  };
+}
+
+/* ============================================================
+   20. Live subscriptions
+   ============================================================ */
+function docsOf(snap){
+  return snap.docs.map(d=>Object.assign({id:d.id},d.data()));
+}
+/* Names and avatars are resolved per render, never stored: they differ
+   from viewer to viewer and go stale the moment someone renames. */
+let resolving=false;
+async function resolvePeople(ids){
+  if(!userCap||resolving) return;
+  const want=ids.filter(id=>id&&!S.people[id]);
+  if(!want.length) return;
+  resolving=true;
+  try{
+    const got=await userCap.profiles(ids);
+    Object.keys(got||{}).forEach(k=>{ S.people[k]=got[k]; });
+    render();
+  }catch(e){ /* user reads never reject, but stay defensive */ }
+  resolving=false;
+}
+function refreshNames(){
+  const ids={};
+  S.profiles.forEach(p=>{ ids[p.id]=1; });
+  S.rooms.forEach(r=>{ ids[r.createdBy]=1; });
+  S.assignments.forEach(a=>{ ids[a.studentId]=1; ids[a.teacherId]=1; });
+  S.reports.forEach(r=>{ ids[r.reporterId]=1; ids[r.reportedId]=1; });
+  if(S.uid) ids[S.uid]=1;
+  resolvePeople(Object.keys(ids));
+}
+function sub(name,ref,onNext){
+  if(unsub[name]){ try{ unsub[name](); }catch(e){} delete unsub[name]; }
+  unsub[name]=ref.onSnapshot(onNext,e=>{
+    console.warn("subscription "+name+" ended",e);
+    if(e&&e.code==="revoked") S.banner="Your access to this app changed. Reopen the page to continue.";
+    render();
+  });
+}
+function startSubscriptions(){
+  sub("profiles",db.collection("profiles"),snap=>{
+    S.profiles=docsOf(snap).map(p=>Object.assign({},p,{speaks:normLangs(p.speaks),practices:normLangs(p.practices)}));
+    const mine=S.profiles.filter(p=>p.id===S.uid)[0]||null;
+    S.profile=mine; S.profileLoaded=true;
+    if(mine) seedDemo();
+    refreshNames(); render();
+  });
+  sub("settings",settingsDoc(),snap=>{
+    if(snap.exists){
+      const d=snap.data()||{};
+      S.settings=Object.assign({pins:[],mutes:[],blocks:[],archives:[],favorites:[],quizHistory:[],lastRead:{},
+        streak:{count:0,lastDate:""},schedule:[],premium:false},d);
+    }
+    render();
+  });
+  sub("account",accountDoc(),snap=>{
+    const d=snap.exists?(snap.data()||{}):{};
+    S.account={email:d.email||"",emailVerified:!!d.emailVerified};
+    S.accountLoaded=true;
+    if(S.onboard&&!S.onboard.email&&S.account.email) S.onboard.email=S.account.email;
+    render();
+  });
+  sub("convs",db.collection("conversations").where("participants","array-contains",S.uid),snap=>{
+    S.convs=docsOf(snap); render();
+  });
+  sub("rooms",db.collection("rooms"),snap=>{
+    S.rooms=docsOf(snap).sort((a,b)=>b.createdAt-a.createdAt);
+    refreshNames(); render();
+  });
+  sub("calls",db.collection("calls").where("participants","array-contains",S.uid),snap=>{
+    incomingCalls=docsOf(snap); render();
+  });
+  sub("certs",db.collection("certs"),snap=>{ S.certs=docsOf(snap); render(); });
+  sub("assignments",db.collection("assignments"),snap=>{
+    S.assignments=docsOf(snap).filter(a=>a.studentId===S.uid||a.teacherId===S.uid);
+    refreshNames(); render();
+  });
+}
+/* The open thread and the open room are subscribed on demand, so the
+   page never holds a listener for every conversation at once. */
+let watchedThread=null, watchedRoom=null;
+function syncOnDemandSubs(){
+  const cid=(S.selected&&!isDemo(S.selected))?convId(S.uid,S.selected):null;
+  if(cid!==watchedThread){
+    watchedThread=cid;
+    if(unsub.thread){ try{ unsub.thread(); }catch(e){} delete unsub.thread; }
+    if(cid) sub("thread",threadDoc(cid),snap=>{
+      S.threads[cid]=snap.exists?(snap.data()||{messages:[]}):{messages:[]};
+      render();
+      const box=view.querySelector(".msgs");
+      if(box&&box.scrollHeight-box.scrollTop-box.clientHeight<140) box.scrollTop=box.scrollHeight;
+    });
+  }
+  const rid=S.tab==="groups"?S.groups.activeId:null;
+  if(rid!==watchedRoom){
+    watchedRoom=rid;
+    if(unsub.roomchat){ try{ unsub.roomchat(); }catch(e){} delete unsub.roomchat; }
+    if(rid) sub("roomchat",db.doc("roomchats/"+rid),snap=>{
+      S.roomLog[rid]=snap.exists?(snap.data()||{messages:[]}):{messages:[]};
+      render();
+    });
+  }
+  if(S.me&&S.me.isOwner&&!unsub.reports){
+    sub("reports",db.collection("reports"),snap=>{ S.reports=docsOf(snap); refreshNames(); render(); });
+  }
+}
+
+/* ============================================================
+   21. Boot
+   ============================================================ */
+function paintFirstFrame(){
+  renderChrome();
+  renderBooting();
+}
+async function boot(){
+  paintFirstFrame();
+
+  /* One try/catch around the whole start-up: a failure in any single
+     step degrades that feature instead of freezing the page. */
+  let caps;
+  try{
+    caps=await Promise.all([
+      claudeUse("db"), claudeUse("user"), claudeUse("sample"), claudeUse("room")
+    ]);
+  }catch(e){ caps=[null,null,null,null]; }
+  db=caps[0]; userCap=caps[1]; sampleFn=caps[2]; roomCap=caps[3];
+
+  if(userCap){
+    try{ S.me=await userCap.me(); S.uid=S.me.id; }catch(e){}
+    try{ S.canWrite=await userCap.can("data.write"); }catch(e){ S.canWrite=null; }
+    if(S.uid&&S.me) S.people[S.uid]={id:S.uid,name:S.me.name,avatarUrl:S.me.avatarUrl,color:S.me.color,email:null,isMe:true};
+  }
+  capsSettled=true;
+
+  if(!db||!S.uid){ render(); return; }
+
+  try{ startSubscriptions(); }
+  catch(e){ console.error("subscriptions failed",e); S.banner=dbErrorCopy(e); }
+
+  /* Local-time readouts on profiles tick once a minute. */
+  if(clockHandle){ clearInterval(clockHandle); clockHandle=null; }
+  clockHandle=setInterval(()=>{ if(S.tab==="discover"||S.tab==="schedule"||S.tab==="conversations") render(); },60000);
+
+  if(roomCap){
+    try{
+      roomCap.onPeers(change=>{
+        const map={};
+        (change&&change.peers||[]).forEach(p=>{
+          const id=(p&&p.presence&&p.presence.uid)||(p&&p.by)||null;
+          if(id) map[id]=true;
+        });
+        S.online=map; render();
+      },()=>{});
+      roomCap.presence({uid:S.uid}).catch(()=>{});
+    }catch(e){ /* presence is decoration - never let it stop the app */ }
+  }
+  render();
+}
+/* `window.claude` may not exist at all outside a viewer, so every reach
+   for it is guarded rather than assumed. */
+function claudeUse(name){
+  try{
+    if(!window.claude||typeof window.claude.use!=="function") return Promise.resolve(null);
+    return window.claude.use(name).catch(()=>null);
+  }catch(e){ return Promise.resolve(null); }
+}
+
+/* Keep the on-demand subscriptions in step with whatever is on screen. */
+const baseRender=renderNow;
+renderNow=function(){ baseRender(); if(db&&S.uid) syncOnDemandSubs(); };
+
+window.addEventListener("beforeunload",()=>{
+  Object.keys(unsub).forEach(k=>{ try{ unsub[k](); }catch(e){} });
+  if(clockHandle) clearInterval(clockHandle);
+  if(presenceHandle) clearInterval(presenceHandle);
+  toastHandles.forEach(h=>clearTimeout(h));
+  if(C.active) resetCall();
+});
+
+boot();
+})();
+</script>
+
+</body></html>
